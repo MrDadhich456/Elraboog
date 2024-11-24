@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dark Study Website</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- External CSS -->
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -13,52 +15,64 @@
     <aside class="sidebar">
       <div class="logo">
         <a href="index.html">
-          <img src="Black_And_White_Illustrated_Eagle_Logo__1___1_-removebg 1.png" alt="Your Logo">
+          <img src="Black_And_White_Illustrated_Eagle_Logo__1___1_-removebg 1.png" alt="Website Logo">
         </a>
       </div>
       <nav>
         <ul>
-          <li><i class="fas fa-home"></i></li>
-          <li><i class="fas fa-chart-bar"></i></li>
-          <li><i class="fas fa-bell"></i></li>
-          <li><i class="fas fa-clock"></i></li>
-          <li><i class="fas fa-book"></i></li>
+          <li><i class="fas fa-home" title="Home"></i></li>
+          <li><i class="fas fa-chart-bar" title="Analytics"></i></li>
+          <li><i class="fas fa-bell" title="Notifications"></i></li>
+          <li><i class="fas fa-clock" title="History"></i></li>
+          <li><i class="fas fa-book" title="Library"></i></li>
         </ul>
       </nav>
     </aside>
 
-    <!-- Main content -->
+    <!-- Main Content -->
     <main>
       <header>
         <input type="text" class="search-bar" placeholder="Search">
       </header>
-
-      <!-- Hero Section -->
       <section class="hero">
-        <div class="hero-text">
-          <h1>Boost Your Study and Keep Learning!</h1>
-          <h3>Your journey to success starts here. Explore resources tailored for your goals.</h3>
-        </div>
-
+        <!-- Text Section -->
+        <h1>Boost Your Study and Keep Learning!</h1>
+        <h3>Your journey to success starts here. Explore resources tailored for your goals.</h3>
+      
         <!-- Cards Section -->
         <div class="cards">
+          <!-- Card 1 -->
           <div class="card">
-            <img src="5.png" alt="JEE Main Resources">
-            <p>Get ready to crack the basics of engineering with comprehensive study material!</p>
-            <button>JEE MAIN</button>
+            <img src="5.png" alt="JEE Main Resources" class="card-image">
+            <p class="card-description">
+              Get ready to crack the basics of engineering with comprehensive study material!
+            </p>
+            <button class="card-button">JEE MAIN</button>
           </div>
+      
+          <!-- Card 2 -->
           <div class="card">
-            <img src="4 1.png" alt="JEE Advanced Resources">
-            <p>Advance your preparation with expert-level resources and strategic study tips!</p>
-            <button>JEE ADVANCE</button>
+            <img src="4 1.png" alt="JEE Advanced Resources" class="card-image">
+            <p class="card-description">
+              Advance your preparation with expert-level resources and strategic study tips!
+            </p>
+            <button class="card-button">JEE ADVANCE</button>
           </div>
+      
+          <!-- Card 3 -->
           <div class="card">
-            <img src="5.png" alt="NEET Preparation Resources">
-            <p>Prepare for a successful medical career with dedicated resources for NEET aspirants!</p>
-            <button>NEET</button>
+            <img src="5.png" alt="NEET Preparation Resources" class="card-image">
+            <p class="card-description">
+              Prepare for a successful medical career with dedicated resources for NEET aspirants!
+            </p>
+            <button class="card-button">NEET</button>
           </div>
         </div>
+        <div class="home">
+            
+        </div>
       </section>
+      
     </main>
   </div>
 </body>

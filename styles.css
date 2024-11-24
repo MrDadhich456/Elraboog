@@ -1,5 +1,5 @@
-/* General Reset */
-body, h1, h3, p, ul, li {
+/* General styles */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -7,29 +7,40 @@ body, h1, h3, p, ul, li {
   
   body {
     font-family: Arial, sans-serif;
-    background-color: #0D1117; /* Dark background */
-    color: #ffffff; /* White text */
+    background-color: #0D1117;
+    color: #ffffff;
   }
   
   .container {
     display: flex;
     height: 100vh;
+    overflow: hidden; /* Ensure no scroll-blocking */
+    width: 100%;
+    justify-content: center;
   }
   
   /* Sidebar */
   .sidebar {
-    width: 60px;
-    background-color: #0D1117; /* Sidebar background */
+    position: sticky;
+    top: 0; /* Stick to the top of the viewport */
+    height: 100vh; /* Full height of the viewport */
+    background-color: transparent;
+    width: 80px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 10px 0;
-    border-color:1px solid #444 ;
+    padding: 20px 0;
+    z-index: 100; /* Ensure it's on top of other content */
+    border-right: 1px solid #28353D;
   }
   
-  .sidebar .logo img {
-    width: 40px;
-    margin-bottom: 20px;
+  
+  .sidebar .logo {
+    width: 56px;
+    height: 56px;
+    font-size: 30px;
+    color: #ffffff;
+    margin-bottom: 40px;
   }
   
   .sidebar nav ul {
@@ -37,15 +48,21 @@ body, h1, h3, p, ul, li {
   }
   
   .sidebar nav ul li {
-    font-size: 1.5rem;
-    color: #ffffff; /* White icons */
-    margin: 20px 0;
+    font-size: 20px;
+    color: #ffffff;
+    padding: 20px 0;
     cursor: pointer;
+    transition: color 0.3s;
   }
   
-  /* Main Content */
+  .sidebar nav ul li:hover {
+    color: #ffffff;
+  }
+  
+  /* Main content */
   main {
     flex-grow: 1;
+    overflow-y: auto; /* Enable vertical scrolling */
     padding: 20px;
   }
   
@@ -56,124 +73,110 @@ body, h1, h3, p, ul, li {
   }
   
   .search-bar {
-    padding: 10px;
-    width: 50%;
-    border-radius: 20px;
+    position: sticky;
+    top: 0; /* Stick to the top of the viewport */
+    z-index: 101; /* Higher than other content to stay visible */
+    width: 50%; /* Adjust the size as needed */
+    padding: 16px 24px; /* Padding for spacing */
+    border-radius: 44px;
     border: none;
-    outline: none;
-    background-color: #28353D; /* Input background */
-    color: #ffffff; /* Input text color */
+    background-color: #28353D; /* Matches the theme */
+    color: #ffffff; /* Text color */
   }
   
-  /* Hero Section */
+  .search-bar::placeholder {
+    color: #8A9CA7;
+  }
+ 
+  /* Hero section */
+  
   .hero {
     display: flex;
+    flex-direction: column; /* Stack text and cards vertically */
+    align-items: center; /* Center the content horizontally */
+    justify-content: flex-start; /* Align content at the top */
+    height: 100vh; /* Full viewport height */
+    gap: 20px; /* Space between text and cards */
+    padding: 20px; /* Add some padding for spacing */
+  }
+
+.hero-text {
+    flex-basis: 25%; /* Take 25% of the width for text */
+    display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    height: 100%;
-    gap: 30px;
+    justify-content: flex-start; /* Align text to start */
+    gap: 16px; /* Space between the heading and subheading */
   }
-  
-  .hero-text {
-    width: 100%;
-    max-width: 1100px;
-    text-align: left; /* Align text to the left */
+  .hero h1 {
+    text-align: center;
+    /* margin-left: 100px; */
+    margin: 0;
+    font-size: 44px;
   }
-  
-  .hero-text h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    color: #ffffff; /* White for headings */
-  }
-  
-  .hero-text h3 {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    color: #ffffff;
+  .hero h3{
+    text-align: left;
+    padding-top: 24px;
+    font-size: 20px;
   }
   
   .cards {
     display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap; /* Enable wrapping for responsiveness */
+    justify-content: center; /* Center the cards horizontally */
+    gap: 30px; /* Space between cards */
+    flex-wrap: wrap; /* Wrap cards to the next row on smaller screens */
+    padding-top: 64px;
   }
   
   .card {
-    flex-basis: 30%; /* Dynamic width for cards */
-    max-width: 350px;
-    height: 400;
-    background-color: #ffffff; /* Card background */
+    width: 320px;
+    height: 400px;
+    background-color: #ffffff;
     border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 16px 10px rgba(109, 109, 109, 0.25); /* Drop shadow */
+    transition: transform 0.3s, box-shadow 0.3s; /* Hover effects */
     overflow: hidden;
     text-align: center;
-    color: #000000; /* White text */
-    transition: transform 0.3s, box-shadow 0.3s;
+    color: #000000;
   }
-  
   .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+    transform: translateY(-5px); /* Hover effect to lift the card */
+    box-shadow: 0 6px 20px 12px rgba(109, 109, 109, 0.3); /* Slightly stronger shadow on hover */
   }
-  
-  .card img {
+  .card-image {
+   
     width: 100%;
-    height: 200px;
-    object-fit: fill;
+    height: 300px; /*Adjust as needed */
+    object-fit:fill; /* Ensures the image fits properly */
   }
   
-  .card p {
-    padding: 15px;
-    font-size: 0.9rem;
+  .card-description {
+    font-size: 12px;
+    padding-top: 10px;
+    color: #000000;
+    line-height: 1.5;
   }
   
-  .card button {
-    margin: 10px;
-    padding: 10px 20px;
-    background-color: #ffffff; /* White button */
-    color: #0D1117; /* Dark button text */
+  .card-button {
+    display: block;
+    width: 50%;
+    margin: 10px auto 15px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #000;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s;
   }
   
-  .card button:hover {
-    background-color: #28353D; /* Button hover matches card */
-    color: #ffffff; /* White text on hover */
+  .card-button:hover {
+    background-color: #444;
   }
-  
-  /* Media Queries for Responsiveness */
-  @media (max-width: 768px) {
-    .hero-text h1 {
-      font-size: 1.8rem;
-    }
-  
-    .hero-text h3 {
-      font-size: 1rem;
-    }
-  
-    .cards {
-      gap: 10px;
-    }
-  
-    .card {
-      flex-basis: 45%; /* Two cards per row */
-    }
+  .home {
+
+    height: 500px;
+    background-color: #8A9CA7;
+    margin: 24px;
   }
-  
-  @media (max-width: 480px) {
-    .hero-text h1 {
-      font-size: 1.5rem;
-    }
-  
-    .hero-text h3 {
-      font-size: 0.9rem;
-    }
-  
-    .card {
-      flex-basis: 100%; /* One card per row */
-    }
-  }
-  
