@@ -3,347 +3,227 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz Page</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <title>Chapter-Based Quiz with Images</title>
   <style>
-    /* General Styles */
     body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background-color: #1c1c1e;
-      color: #f5f5f7;
-      overflow: hidden;
-    }
-
-    .quiz-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      z-index: 9999;
-    }
-
-    header {
-      background-color: #2d2d31;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: #f5f5f7;
-      font-size: 20px;
-      border-bottom: 2px solid #444;
-    }
-
-    .title {
-      font-weight: 600;
-    }
-
-    .timer {
-      background-color: #ff3b30;
-      padding: 5px 15px;
-      border-radius: 5px;
-      font-size: 14px;
-    }
-
-    /* Question Section */
-    .question-area {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      margin-top: 50px;
-      overflow-y: hidden;
-    }
-
-    .question {
-      display: none;
-      text-align: center;
-      width: 80%;
-      max-width: 700px;
-    }
-
-    .question img {
-      max-width: 100%;
-      margin-top: 15px;
-      border: 2px solid #444;
-      border-radius: 8px;
-    }
-
-    .options {
-      margin-top: 20px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      width: 100%;
-      max-width: 700px;
-    }
-
-    .options label {
-      background-color: #2d2d31;
-      color: #f5f5f7;
-      padding: 15px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s, transform 0.2s;
-      text-align: center;
-      font-size: 16px;
-    }
-
-    .options input {
-      display: none;
-    }
-
-    .options label:hover {
-      background-color: #444;
-      transform: scale(1.05);
-    }
-
-    .options input:checked + label {
-      background-color: #1db954;
+      font-family: Arial, sans-serif;
+      background-color: #0D1117;
       color: white;
-    }
-
-    /* Navigation Buttons */
-    .navigation-buttons {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      width: 100%;
-      max-width: 700px;
-      margin: 30px 0 20px;
-    }
-
-    .navigation-buttons button {
-      background-color: #444;
-      color: #f5f5f7;
-      border: none;
-      padding: 15px 20px;
-      border-radius: 5px;
-      font-size: 16px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background-color 0.3s, transform 0.2s;
-    }
-
-    .navigation-buttons button:hover {
-      background-color: #555;
-      transform: scale(1.05);
-    }
-
-    .navigation-buttons .submit {
-      background-color: #1db954;
-    }
-
-    .navigation-buttons .submit:hover {
-      background-color: #138a3b;
-    }
-
-    /* Question Navigator */
-    .navigator {
-      position: fixed;
-      right: -300px;
-      top: 0;
-      width: 300px;
-      height: 100%;
-      background-color: #2d2d31;
-      color: #f5f5f7;
-      padding: 20px;
-      box-shadow: -4px 0 10px rgba(0, 0, 0, 0.2);
-      transition: right 0.3s ease-in-out;
-      overflow-y: auto;
-    }
-
-    .navigator h3 {
       text-align: center;
-      margin-bottom: 20px;
-      font-size: 20px;
     }
-
-    .navigator .question-numbers {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 10px;
+    h2 {
+      margin-top: 50px;
     }
-
-    .navigator .question-numbers button {
-      background-color: #444;
-      color: #f5f5f7;
-      border: none;
-      padding: 10px;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    .navigator .question-numbers button:hover {
-      background-color: #1db954;
-    }
-
-    .open-navigator {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      background-color: #1db954;
-      color: #fff;
+    .chapter-button {
+      background-color: #555;
+      color: white;
       padding: 10px 20px;
-      border-radius: 5px;
-      font-size: 16px;
+      margin: 10px;
       border: none;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      font-size: 16px;
+      width: 200px;
     }
-
-    .open-navigator:hover {
-      background-color: #138a3b;
+    .chapter-button:hover {
+      background-color: #777;
+    }
+    .quiz-container {
+      display: none;
+      justify-items: center;
+    }
+    .answer-option {
+      background-color: #444;
+      color: white;
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      width: 200px;
+    }
+    .answer-option:hover {
+      background-color: #666;
+    }
+    img {
+      width: 100%;
+      height: auto;
+    }
+    .image-container {
+     
+      width: 600px;
+      height: 200px;
+      overflow-y: scroll;
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+    }
+    .image-container img {
+      width: 100%;
+      height: auto;
     }
   </style>
 </head>
 <body>
-  <div class="quiz-container">
-    <!-- Header -->
-    <header>
-      <div class="title">Quiz: JEE Advanced</div>
-      <div class="timer" id="timer">Time Left: 30:00</div>
-    </header>
 
-    <!-- Question Area -->
-    <div class="question-area">
-      <!-- Question 1 -->
-      <div class="question" id="q1">
-        <h2>1. Identify the following structure:</h2>
-        <img src="question1.png" alt="Question 1">
-        <div class="options">
-          <input type="radio" id="q1a" name="q1" value="a">
-          <label for="q1a">Option A</label>
-          <input type="radio" id="q1b" name="q1" value="b">
-          <label for="q1b">Option B</label>
-          <input type="radio" id="q1c" name="q1" value="c">
-          <label for="q1c">Option C</label>
-          <input type="radio" id="q1d" name="q1" value="d">
-          <label for="q1d">Option D</label>
-        </div>
-      </div>
+  <!-- Chapter Selection Page -->
+  <div id="chapter-selection">
+    <h2>Select a Chapter</h2>
+    <div id="chapters-list"></div>
+  </div>
 
-      <!-- Question 2 -->
-      <div class="question" id="q2">
-        <h2>2. What is the chemical formula of water?</h2>
-        <div class="options">
-          <input type="radio" id="q2a" name="q2" value="a">
-          <label for="q2a">H2O</label>
-          <input type="radio" id="q2b" name="q2" value="b">
-          <label for="q2b">CO2</label>
-          <input type="radio" id="q2c" name="q2" value="c">
-          <label for="q2c">O2</label>
-          <input type="radio" id="q2d" name="q2" value="d">
-          <label for="q2d">NaCl</label>
-        </div>
-      </div>
-
-      <!-- Question 3 -->
-      <div class="question" id="q3">
-        <h2>3. Who discovered gravity?</h2>
-        <div class="options">
-          <input type="radio" id="q3a" name="q3" value="a">
-          <label for="q3a">Isaac Newton</label>
-          <input type="radio" id="q3b" name="q3" value="b">
-          <label for="q3b">Albert Einstein</label>
-          <input type="radio" id="q3c" name="q3" value="c">
-          <label for="q3c">Galileo Galilei</label>
-          <input type="radio" id="q3d" name="q3" value="d">
-          <label for="q3d">Marie Curie</label>
-        </div>
-      </div>
+  <!-- Quiz Section -->
+  <div id="quiz-section" class="quiz-container">
+    <div id="question-container"></div>
+    <div>
+      <button id="previous">Previous</button>
+      <button id="next">Next</button>
     </div>
+    <button id="submit">Submit Quiz</button>
+  </div>
 
-    <!-- Navigation Buttons -->
-    <div class="navigation-buttons">
-      <button onclick="prevQuestion()">Previous</button>
-      <button onclick="nextQuestion()">Next</button>
-      <button onclick="reviewQuestion()">Review</button>
-      <button class="submit" onclick="submitQuiz()">Submit</button>
-    </div>
-
-    <!-- Question Navigator -->
-    <div class="navigator" id="navigator">
-      <h3>Question Navigator</h3>
-      <div class="question-numbers">
-        <button onclick="goToQuestion(1)">1</button>
-        <button onclick="goToQuestion(2)">2</button>
-        <button onclick="goToQuestion(3)">3</button>
-      </div>
-    </div>
-
-    <!-- Open Navigator Button -->
-    <button class="open-navigator" onclick="toggleNavigator()">Show Questions</button>
+  <!-- Result Section -->
+  <div id="result-section" class="quiz-container">
+    <h3>Your Results</h3>
+    <p id="score"></p>
+    <button id="retake">Retake Quiz</button>
   </div>
 
   <script>
-    // Timer countdown
-    let time = 30 * 60; // 30 minutes
-    let timerElement = document.getElementById('timer');
-    let timerInterval = setInterval(function() {
-      let minutes = Math.floor(time / 60);
-      let seconds = time % 60;
-      timerElement.innerText = `Time Left: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-      time--;
-      if (time < 0) {
-        clearInterval(timerInterval);
-        alert("Time is up!");
+    // Data Structure: List of quizzes (chapters)
+    const quizzes = [
+      {
+        chapter: "Chapter 1: Animal Quiz",
+        questions: [
+          {
+            questionImage: "Screenshot_2024-12-01-14-02-40-22_e2d5b3f32b79de1d45acd1fad96fbb0f.jpg", // Example image URL
+            options: ["Lion", "Tiger", "Elephant", "Bear"],
+            correctAnswer: 0
+          },
+          {
+            questionImage: "WhatsApp Image 2024-12-01 at 14.34.59_129ac35f.jpg", // Example image URL
+            options: ["Dog", "Cat", "Horse", "Rabbit"],
+            correctAnswer: 1
+          }
+        ]
+      },
+      {
+        chapter: "Chapter 2: Fruit Quiz",
+        questions: [
+          {
+            questionImage: "https://example.com/fruit1.jpg", // Example image URL
+            options: ["Apple", "Banana", "Grapes", "Orange"],
+            correctAnswer: 0
+          },
+          {
+            questionImage: "https://example.com/fruit2.jpg", // Example image URL
+            options: ["Mango", "Pineapple", "Peach", "Cherry"],
+            correctAnswer: 2
+          }
+        ]
       }
-    }, 1000);
+      // Add more chapters here...
+    ];
 
-    // Question navigation functions
-    let currentQuestion = 1;
+    // HTML elements
+    const chapterSelection = document.getElementById('chapter-selection');
+    const chaptersList = document.getElementById('chapters-list');
+    const quizSection = document.getElementById('quiz-section');
+    const resultSection = document.getElementById('result-section');
+    const questionContainer = document.getElementById('question-container');
+    const submitButton = document.getElementById('submit');
+    const scoreElement = document.getElementById('score');
+    const retakeButton = document.getElementById('retake');
 
-    function showQuestion(id) {
-      const questions = document.querySelectorAll('.question');
-      questions.forEach((question) => question.style.display = 'none');
-      document.getElementById(`q${id}`).style.display = 'block';
+    let currentChapterIndex = -1;
+    let currentQuestionIndex = 0;
+    let selectedAnswers = [];
+
+    // Function to load chapters (chapter selection page)
+    function loadChapters() {
+      quizzes.forEach((quiz, index) => {
+        const chapterButton = document.createElement('button');
+        chapterButton.textContent = quiz.chapter;
+        chapterButton.classList.add('chapter-button');
+        chapterButton.onclick = () => loadQuiz(index); // When chapter is clicked, load that quiz
+        chaptersList.appendChild(chapterButton);
+      });
     }
 
-    function nextQuestion() {
-      if (currentQuestion < 3) {
-        currentQuestion++;
-        showQuestion(currentQuestion);
+    // Function to load the quiz for the selected chapter
+    function loadQuiz(chapterIndex) {
+      currentChapterIndex = chapterIndex;
+      currentQuestionIndex = 0;
+      selectedAnswers = [];
+
+      chapterSelection.style.display = 'none';  // Hide chapter selection
+      quizSection.style.display = 'block';      // Show quiz section
+
+      showQuestion(currentQuestionIndex);
+    }
+
+    // Function to show a question with an image
+    function showQuestion(questionIndex) {
+      const chapter = quizzes[currentChapterIndex];
+      const question = chapter.questions[questionIndex];
+
+      questionContainer.innerHTML = `
+        <h3>Question ${questionIndex + 1}</h3>
+        <div class="image-container">
+          <img src="${question.questionImage}" alt="Question Image" />
+        </div>
+        ${question.options.map((option, index) => `
+          <button class="answer-option" data-index="${index}">${String.fromCharCode(65 + index)}. ${option}</button>
+        `).join('')}
+      `;
+
+      // Add event listeners to the options
+      document.querySelectorAll('.answer-option').forEach(option => {
+        option.addEventListener('click', () => {
+          selectedAnswers[questionIndex] = parseInt(option.dataset.index);
+        });
+      });
+    }
+
+    // Function to navigate to the next question
+    document.getElementById('next').addEventListener('click', () => {
+      if (currentQuestionIndex < quizzes[currentChapterIndex].questions.length - 1) {
+        currentQuestionIndex++;
+        showQuestion(currentQuestionIndex);
       }
-    }
+    });
 
-    function prevQuestion() {
-      if (currentQuestion > 1) {
-        currentQuestion--;
-        showQuestion(currentQuestion);
+    // Function to navigate to the previous question
+    document.getElementById('previous').addEventListener('click', () => {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        showQuestion(currentQuestionIndex);
       }
-    }
+    });
 
-    function goToQuestion(num) {
-      currentQuestion = num;
-      showQuestion(num);
-    }
+    // Function to submit the quiz and show the results
+    submitButton.addEventListener('click', () => {
+      const chapter = quizzes[currentChapterIndex];
+      let score = 0;
 
-    // Toggle navigator visibility
-    function toggleNavigator() {
-      const navigator = document.getElementById('navigator');
-      const rightPosition = navigator.style.right === '0px' ? '-300px' : '0px';
-      navigator.style.right = rightPosition;
-    }
+      chapter.questions.forEach((question, index) => {
+        if (selectedAnswers[index] === question.correctAnswer) {
+          score++;
+        }
+      });
 
-    // Review function
-    function reviewQuestion() {
-      alert('Review feature coming soon!');
-    }
+      scoreElement.textContent = `You scored ${score} out of ${chapter.questions.length}`;
+      quizSection.style.display = 'none';    // Hide quiz section
+      resultSection.style.display = 'block'; // Show result section
+    });
 
-    // Submit quiz
-    function submitQuiz() {
-      alert("Quiz Submitted!");
-    }
+    // Function to retake the quiz
+    retakeButton.addEventListener('click', () => {
+      selectedAnswers = [];
+      resultSection.style.display = 'none';    // Hide result section
+      chapterSelection.style.display = 'block'; // Show chapter selection
+    });
 
-    // Initialize first question visibility
-    showQuestion(currentQuestion);
+    // Load chapters when the page loads
+    window.onload = loadChapters;
   </script>
 </body>
 </html>

@@ -185,22 +185,25 @@ body {
   .card {
     width: 320px;
     height: 400px;
-    background-color: #ecf2f8;
+    background: linear-gradient(135deg, #f8f9fa, #e0e6ed); /* Subtle gradient for a premium feel */
     border-radius: 12px;
-    box-shadow: 0 4px 16px 10px rgba(109, 109, 109, 0.25); /* Drop shadow */
-    transition: transform 0.3s, box-shadow 0.3s; /* Hover effects */
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); /* Softer shadow for elegance */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease; /* Smooth transition effects */
     overflow: hidden;
     text-align: center;
-    color: #000000;
-  }
-  .card:hover {
-    transform: translateY(-5px); /* Hover effect to lift the card */
-    box-shadow: 0 6px 20px 12px rgba(109, 109, 109, 0.3); /* Slightly stronger shadow on hover */
-  }
+    color: #333; /* Slightly darker text for better contrast */
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-8px); /* Increased hover lift for a dynamic feel */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15); /* More pronounced shadow on hover */
+    background: linear-gradient(135deg, #e8f0f7, #cfd6e3); /* Subtle color shift on hover */
+}
   .card-image {
    
-    width: 100%;
-    height: 300px; /*Adjust as needed */
+    width: 270px;
+    height: 270px; /*Adjust as needed */
     object-fit:fill; /* Ensures the image fits properly */
   }
   
