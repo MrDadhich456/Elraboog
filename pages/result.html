@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #121212;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .result-box {
+      background-color: #1c1c1c;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      width: 300px;
+    }
+
+    .result-box h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .result-box p {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    .result-box button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #10b981;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .result-box button:hover {
+      background-color: #059669;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="result-box">
+      <h1>Quiz Results</h1>
+      <p><strong>Total Score:</strong> <span id="score"></span></p>
+      <p><strong>Attempted Questions:</strong> <span id="attempted"></span></p>
+      <p><strong>Unanswered Questions:</strong> <span id="unanswered"></span></p>
+      <p><strong>Time Taken:</strong> <span id="time-taken"></span></p>
+      <button onclick="goBack()">Go Back</button>
+    </div>
+  </div>
+
+  <script>
+    // Retrieve the stored results from localStorage
+    const score = localStorage.getItem("score");
+    const attempted = localStorage.getItem("attempted");
+    const unanswered = localStorage.getItem("unanswered");
+    const timeTaken = localStorage.getItem("timeTaken");
+
+    // Display the results on the page
+    document.getElementById("score").innerText = `${score}/${parseInt(attempted) + parseInt(unanswered)}`;
+    document.getElementById("attempted").innerText = attempted;
+    document.getElementById("unanswered").innerText = unanswered;
+    document.getElementById("time-taken").innerText = timeTaken;
+
+    // Function to go back to the quiz page
+    function goBack() {
+      window.history.back();
+    }
+  </script>
+
+</body>
+</html>

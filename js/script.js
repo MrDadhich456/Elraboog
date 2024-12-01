@@ -16,6 +16,308 @@ const quizzes = [
       ]
     },
     {
+      chapter: "CHAPTER :2 relation",
+      questions: [
+        {
+          questionImage: "https://example.com/animal1.jpg", // Example image URL
+          options: ["Lion", "Tiger", "Elephant", "Bear"],
+          correctAnswer: 0
+        },
+        {
+          questionImage: "https://example.com/animal2.jpg", // Example image URL
+          options: ["Dog", "Cat", "Horse", "Rabbit"],
+          correctAnswer: 1
+        }
+      ]
+    },
+    {
+      chapter: "CHAPTER :3 number",
+      questions: [
+        {
+          questionImage: "https://example.com/animal1.jpg", // Example image URL
+          options: ["Lion", "Tiger", "Elephant", "Bear"],
+          correctAnswer: 0
+        },
+        {
+          questionImage: "https://example.com/animal2.jpg", // Example image URL
+          options: ["Dog", "Cat", "Horse", "Rabbit"],
+          correctAnswer: 1
+        }
+      ]
+    },
+    {
+      chapter: "Chapter 2: Fruit Quiz",
+      questions: [
+        {
+          questionImage: "https://example.com/fruit1.jpg", // Example image URL
+          options: ["Apple", "Banana", "Grapes", "Orange"],
+          correctAnswer: 0
+        },
+        {
+          questionImage: "https://example.com/fruit2.jpg", // Example image URL
+          options: ["Mango", "Pineapple", "Peach", "Cherry"],
+          correctAnswer: 2
+        }
+      ]
+    },{
+      chapter: "CHAPTER :3 number",
+      questions: [
+        {
+          questionImage: "https://example.com/animal1.jpg", // Example image URL
+          options: ["Lion", "Tiger", "Elephant", "Bear"],
+          correctAnswer: 0
+        },
+        {
+          questionImage: "https://example.com/animal2.jpg", // Example image URL
+          options: ["Dog", "Cat", "Horse", "Rabbit"],
+          correctAnswer: 1
+        }
+      ]
+    },
+    {
+      chapter: "Chapter 2: Fruit Quiz",
+      questions: [
+        {
+          questionImage: "https://example.com/fruit1.jpg", // Example image URL
+          options: ["Apple", "Banana", "Grapes", "Orange"],
+          correctAnswer: 0
+        },
+        {
+          questionImage: "https://example.com/fruit2.jpg", // Example image URL
+          options: ["Mango", "Pineapple", "Peach", "Cherry"],
+          correctAnswer: 2
+        }
+      ]
+    },{
+      chapter: "CHAPTER :3 number",
+      questions: [
+        {
+          questionImage: "https://example.com/animal1.jpg", // Example image URL
+          options: ["Lion", "Tiger", "Elephant", "Bear"],
+          correctAnswer: 0
+        },
+        {
+          questionImage: "https://example.com/animal2.jpg", // Example image URL
+          options: ["Dog", "Cat", "Horse", "Rabbit"],
+          correctAnswer: 1
+        }
+      ]
+    },
+    {
+      chapter: "Chapter 2: Fruit Quiz",
+      questions: [
+        {
+          questionImage: "https://example.com/fruit1.jpg", // Example image URL
+          options: ["Apple", "Banana", "Grapes", "Orange"],
+          correctAnswer: 0
+        },
+        {
+          questionImage: "https://example.com/fruit2.jpg", // Example image URL
+          options: ["Mango", "Pineapple", "Peach", "Cherry"],
+          correctAnswer: 2
+        }
+      ]
+    },
+    {
+      chapter: "Chapter 2: Fruit Quiz",
+      questions: [
+        {
+          questionImage: "https://example.com/fruit1.jpg", // Example image URL
+          options: ["Apple", "Banana", "Grapes", "Orange"],
+          correctAnswer: 0
+        },
+        {
+          questionImage: "https://example.com/fruit2.jpg", // Example image URL
+          options: ["Mango", "Pineapple", "Peach", "Cherry"],
+          correctAnswer: 2
+        }
+      ]
+    },
+    {
+      chapter: "Chapter 2: Fruit Quiz",
+      questions: [
+        {
+          questionImage: "https://example.com/fruit1.jpg", // Example image URL
+          options: ["Apple", "Banana", "Grapes", "Orange"],
+          correctAnswer: 0
+        },
+        {
+          questionImage: "https://example.com/fruit2.jpg", // Example image URL
+          options: ["Mango", "Pineapple", "Peach", "Cherry"],
+          correctAnswer: 2
+        }
+      ]
+    },
+    {
+      chapter: "Chapter 2: Fruit Quiz",
+      questions: [
+        {
+          questionImage: "https://example.com/fruit1.jpg", // Example image URL
+          options: ["Apple", "Banana", "Grapes", "Orange"],
+          correctAnswer: 0
+        },
+        {
+          questionImage: "https://example.com/fruit2.jpg", // Example image URL
+          options: ["Mango", "Pineapple", "Peach", "Cherry"],
+          correctAnswer: 2
+        }
+      ]
+    },
+    {
+      chapter: "Chapter 2: Fruit Quiz",
+      questions: [
+        {
+          questionImage: "https://example.com/fruit1.jpg", // Example image URL
+          options: ["Apple", "Banana", "Grapes", "Orange"],
+          correctAnswer: 0
+        },
+        {
+          questionImage: "https://example.com/fruit2.jpg", // Example image URL
+          options: ["Mango", "Pineapple", "Peach", "Cherry"],
+          correctAnswer: 2
+        }
+      ]
+    },{
+      chapter: "Chapter 2: Fruit Quiz",
+      questions: [
+        {
+          questionImage: "https://example.com/fruit1.jpg", // Example image URL
+          options: ["Apple", "Banana", "Grapes", "Orange"],
+          correctAnswer: 0
+        },
+        {
+          questionImage: "https://example.com/fruit2.jpg", // Example image URL
+          options: ["Mango", "Pineapple", "Peach", "Cherry"],
+          correctAnswer: 2
+        }
+      ]
+    },{
+      chapter: "Chapter 2: Fruit Quiz",
+      questions: [
+        {
+          questionImage: "https://example.com/fruit1.jpg", // Example image URL
+          options: ["Apple", "Banana", "Grapes", "Orange"],
+          correctAnswer: 0
+        },
+        {
+          questionImage: "https://example.com/fruit2.jpg", // Example image URL
+          options: ["Mango", "Pineapple", "Peach", "Cherry"],
+          correctAnswer: 2
+        }
+      ]
+    },{
+      chapter: "Chapter 2: Fruit Quiz",
+      questions: [
+        {
+          questionImage: "https://example.com/fruit1.jpg", // Example image URL
+          options: ["Apple", "Banana", "Grapes", "Orange"],
+          correctAnswer: 0
+        },
+        {
+          questionImage: "https://example.com/fruit2.jpg", // Example image URL
+          options: ["Mango", "Pineapple", "Peach", "Cherry"],
+          correctAnswer: 2
+        }
+      ]
+    },{
+      chapter: "Chapter 2: Fruit Quiz",
+      questions: [
+        {
+          questionImage: "https://example.com/fruit1.jpg", // Example image URL
+          options: ["Apple", "Banana", "Grapes", "Orange"],
+          correctAnswer: 0
+        },
+        {
+          questionImage: "https://example.com/fruit2.jpg", // Example image URL
+          options: ["Mango", "Pineapple", "Peach", "Cherry"],
+          correctAnswer: 2
+        }
+      ]
+    },{
+      chapter: "Chapter 2: Fruit Quiz",
+      questions: [
+        {
+          questionImage: "https://example.com/fruit1.jpg", // Example image URL
+          options: ["Apple", "Banana", "Grapes", "Orange"],
+          correctAnswer: 0
+        },
+        {
+          questionImage: "https://example.com/fruit2.jpg", // Example image URL
+          options: ["Mango", "Pineapple", "Peach", "Cherry"],
+          correctAnswer: 2
+        }
+      ]
+    },{
+      chapter: "Chapter 2: Fruit Quiz",
+      questions: [
+        {
+          questionImage: "https://example.com/fruit1.jpg", // Example image URL
+          options: ["Apple", "Banana", "Grapes", "Orange"],
+          correctAnswer: 0
+        },
+        {
+          questionImage: "https://example.com/fruit2.jpg", // Example image URL
+          options: ["Mango", "Pineapple", "Peach", "Cherry"],
+          correctAnswer: 2
+        }
+      ]
+    },{
+      chapter: "Chapter 2: Fruit Quiz",
+      questions: [
+        {
+          questionImage: "https://example.com/fruit1.jpg", // Example image URL
+          options: ["Apple", "Banana", "Grapes", "Orange"],
+          correctAnswer: 0
+        },
+        {
+          questionImage: "https://example.com/fruit2.jpg", // Example image URL
+          options: ["Mango", "Pineapple", "Peach", "Cherry"],
+          correctAnswer: 2
+        }
+      ]
+    },{
+      chapter: "Chapter 2: Fruit Quiz",
+      questions: [
+        {
+          questionImage: "https://example.com/fruit1.jpg", // Example image URL
+          options: ["Apple", "Banana", "Grapes", "Orange"],
+          correctAnswer: 0
+        },
+        {
+          questionImage: "https://example.com/fruit2.jpg", // Example image URL
+          options: ["Mango", "Pineapple", "Peach", "Cherry"],
+          correctAnswer: 2
+        }
+      ]
+    },{
+      chapter: "Chapter 2: Fruit Quiz",
+      questions: [
+        {
+          questionImage: "https://example.com/fruit1.jpg", // Example image URL
+          options: ["Apple", "Banana", "Grapes", "Orange"],
+          correctAnswer: 0
+        },
+        {
+          questionImage: "https://example.com/fruit2.jpg", // Example image URL
+          options: ["Mango", "Pineapple", "Peach", "Cherry"],
+          correctAnswer: 2
+        }
+      ]
+    },{
+      chapter: "Chapter 2: Fruit Quiz",
+      questions: [
+        {
+          questionImage: "https://example.com/fruit1.jpg", // Example image URL
+          options: ["Apple", "Banana", "Grapes", "Orange"],
+          correctAnswer: 0
+        },
+        {
+          questionImage: "https://example.com/fruit2.jpg", // Example image URL
+          options: ["Mango", "Pineapple", "Peach", "Cherry"],
+          correctAnswer: 2
+        }
+      ]
+    },{
       chapter: "Chapter 2: Fruit Quiz",
       questions: [
         {
