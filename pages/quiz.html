@@ -22,7 +22,7 @@
     }
 
     .header {
-      background-color:#0D1117;
+      background-color: #0D1117;
       padding: 10px 20px;
       display: flex;
       justify-content: space-between;
@@ -56,8 +56,8 @@
     .question-image {
       width: 100%;
       max-width: 500px;
-      height: 200px;
-      background-color: #ccc;
+      height: 300px;
+      background-color:transparent;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -86,8 +86,8 @@
       color: #000000;
       cursor: pointer;
       text-align: center;
-      border: 1px solid #8A9CA7; /* Lighter border on hover/focus */
-  box-shadow: 0 0 6px rgba(138, 156, 167, 0.6); /* Glowing effect */
+      border: 1px solid #8A9CA7;
+      box-shadow: 0 0 6px rgba(138, 156, 167, 0.6);
     }
 
     .answer-option:hover {
@@ -96,6 +96,7 @@
 
     .answer-option.selected {
       background-color: #10b981;
+      color: white;
     }
 
     .navigation-buttons {
@@ -104,7 +105,6 @@
       margin-top: 20px;
       width: 100%;
       max-width: 600px;
-      
     }
 
     .navigation-buttons button {
@@ -115,33 +115,35 @@
       border-radius: 5px;
       color: #000000;
       cursor: pointer;
-      border: 1px solid #8A9CA7; /* Lighter border on hover/focus */
-  box-shadow: 0 0 6px rgba(138, 156, 167, 0.6); /* Glowing effect */
+      border: 1px solid #8A9CA7;
+      box-shadow: 0 0 6px rgba(138, 156, 167, 0.6);
     }
 
     .navigation-buttons button:hover {
       background-color: #444;
+      color: white;
     }
 
     .sidebar {
       flex: 1;
       background-color: #28353D;
-     
       margin: 20px 5px;
       border-radius: 12px 0px 0px 12px;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
-    .text{
+
+    .text {
       width: 100%;
-      border-bottom:2px solid #ECF2F8;
+      border-bottom: 2px solid #ECF2F8;
       text-align: center;
-  
     }
+
     .sidebar h3 {
       color: #ffffff;
       font-size: 24px;
+      margin-bottom: 20px;
     }
 
     .question-navigation {
@@ -165,7 +167,7 @@
 
     .question-number.selected {
       background-color: #0D1117;
-      color:#ffffff;
+      color: #ffffff;
     }
 
     .question-number:hover {
@@ -174,63 +176,68 @@
 
     #submit {
       display: block;
-    width: 50%;
-    margin: 10px auto 15px;
-    padding: 15px 30px ;
-    font-size: 20px;
-    font-weight: bold;
-    color: #000000;
-    background-color: #ECF2F8;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+      width: 50%;
+      margin: 10px auto 15px;
+      padding: 15px 30px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #000000;
+      background-color: #ECF2F8;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s;
     }
 
     #submit:hover {
       background-color: #444;
+      color: white;
     }
 
-    /* Modal styles */
     #submit-modal {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background:#28353D;
+      background: rgba(0, 0, 0, 0.8);
       display: none;
       justify-content: center;
       align-items: center;
     }
 
     .modal-content {
-      background: #0D1117;
+      background: #28353D;
       padding: 20px;
       border-radius: 10px;
       text-align: center;
       color: white;
+      width: 80%;
+      max-width: 400px;
     }
 
     .modal-content button {
-      margin-top: 20px;
+      margin: 20px;
       background-color: #ECF2F8;
       border: none;
       padding: 10px 20px;
       font-size: 16px;
-      color: white;
+      color: #000000;
       cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
     }
 
     .modal-content button:hover {
       background-color: #444;
+      color: white;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <header class="header">
-      <img src="../assest/img/logo/Black_And_White_Illustrated_Eagle_Logo__1___1_-removebg 1.png" alt="Logo">
+      <img src="../assest/img/logo/logo.png" alt="Logo">
       <div class="timer" id="timer">TIME: 60:00</div>
     </header>
     <main>
@@ -245,9 +252,10 @@
       </div>
       <aside class="sidebar">
         <div class="text">
-        <h3>QUESTIONS</h3></div>
+          <h3>QUESTIONS</h3>
+        </div>
         <div class="question-navigation" id="question-navigation"></div>
-        <button id="submit">SUBMIT</button>
+        <button id="submit">Submit</button>
       </aside>
     </main>
   </div>
@@ -266,161 +274,287 @@
   </div>
 
   <script>
-    const quizzes = [
-      {
-        chapter: "Sample Chapter",
-        questions: [
-          {
-            questionImage: "https://via.placeholder.com/500x200?text=Question+1",
-            options: ["Option A", "Option B", "Option C", "Option D"],
-            correctAnswer: 0,
-          },
-          {
-            questionImage: "https://via.placeholder.com/500x200?text=Question+2",
-            options: ["Option A", "Option B", "Option C", "Option D"],
-            correctAnswer: 1,
-          },
-          {
-            questionImage: "https://via.placeholder.com/500x200?text=Question+3",
-            options: ["Option A", "Option B", "Option C", "Option D"],
-            correctAnswer: 2,
-          },
-        ],
-      },
-    ];
+    // JavaScript code here
+    // Sample question data
+const questions = [
+{
+  image: "../assest/physics/kinematics/quiz 1/1.png",
+  options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+  correct: 1, // Index of the correct option
+},
+{
+  image: "../assest/physics/kinematics/quiz 1/2.png",
+  options: ["Option A", "Option B", "Option C", "Option D"],
+  correct: 1,
+},
+{
+  image: "../assest/physics/kinematics/quiz 1/3.png",
+  options: ["Option A", "Option B", "Option C", "Option D"],
+  correct: 3,
+},
+{
+  image: "../assest/physics/kinematics/quiz 1/4.png",
+  options: ["Option A", "Option B", "Option C", "Option D"],
+  correct: 1,
+},
+{
+  image: "../assest/physics/kinematics/quiz 1/5.png",
+  options: ["Option A", "Option B", "Option C", "Option D"],
+  correct: 2,
+},
+{
+  image: "../assest/physics/kinematics/quiz 1/6.png",
+  options: ["Option A", "Option B", "Option C", "Option D"],
+  correct: 2,
+},
+{
+  image: "../assest/physics/kinematics/quiz 1/7.png",
+  options: ["Option A", "Option B", "Option C", "Option D"],
+  correct: 2,
+},
+{
+  image: "../assest/physics/kinematics/quiz 1/8.png",
+  options: ["Option A", "Option B", "Option C", "Option D"],
+  correct: 1,
+},
+{
+  image: "../assest/physics/kinematics/quiz 1/9.png",
+  options: ["Option A", "Option B", "Option C", "Option D"],
+  correct: 1,
+},
+{
+  image: "../assest/physics/kinematics/quiz 1/10.png",
+  options: ["Option A", "Option B", "Option C", "Option D"],
+  correct: 3,
+},
+{
+  image: "../assest/physics/kinematics/quiz 1/11.png",
+  options: ["Option A", "Option B", "Option C", "Option D"],
+  correct: 2,
+},
+{
+  image: "../assest/physics/kinematics/quiz 1/12.png",
+  options: ["Option A", "Option B", "Option C", "Option D"],
+  correct: 1,
+},
+{
+  image: "../assest/physics/kinematics/quiz 1/13.png",
+  options: ["Option A", "Option B", "Option C", "Option D"],
+  correct: 0,
+},
+{
+  image: "../assest/physics/kinematics/quiz 1/14.png",
+  options: ["Option A", "Option B", "Option C", "Option D"],
+  correct: 3,
+},
+{
+  image: "../assest/physics/kinematics/quiz 1/15.png",
+  options: ["Option A", "Option B", "Option C", "Option D"],
+  correct: 2,
+},
+{
+  image: "../assest/physics/kinematics/quiz 1/16.png",
+  options: ["Option A", "Option B", "Option C", "Option D"],
+  correct: 1,
+},
+{
+  image: "../assest/physics/kinematics/quiz 1/17.png",
+  options: ["Option A", "Option B", "Option C", "Option D"],
+  correct: 1,
+},
+{
+  image: "../assest/physics/kinematics/quiz 1/18.png",
+  options: ["Option A", "Option B", "Option C", "Option D"],
+  correct: 1,
+},
+{
+  image: "../assest/physics/kinematics/quiz 1/19.png",
+  options: ["Option A", "Option B", "Option C", "Option D"],
+  correct: 0,
+},
+{
+  image: "../assest/physics/kinematics/quiz 1/20.png",
+  options: ["Option A", "Option B", "Option C", "Option D"],
+  correct: 1,
+},
+{
+  image: "../assest/physics/kinematics/quiz 1/21.png",
+  options: ["Option A", "Option B", "Option C", "Option D"],
+  correct: 2,
+},
+{
+  image: "../assest/physics/kinematics/quiz 1/22.png",
+  options: ["Option A", "Option B", "Option C", "Option D"],
+  correct: 2,
+},
+{
+  image: "../assest/physics/kinematics/quiz 1/23.png",
+  options: ["Option A", "Option B", "Option C", "Option D"],
+  correct: 2,
+},
+{
+  image: "../assest/physics/kinematics/quiz 1/24.png",
+  options: ["Option A", "Option B", "Option C", "Option D"],
+  correct: 2,
+},
+{
+  image: "../assest/physics/kinematics/quiz 1/25.png",
+  options: ["Option A", "Option B", "Option C", "Option D"],
+  correct: 2,
+},
+// Add more questions as needed
+];
 
-    const selectedChapter = quizzes[0];
-    let currentQuestionIndex = 0;
-    let answers = Array(selectedChapter.questions.length).fill(null);
-    let timerInterval;
-    let remainingTime = 60 * 60; // 1 hour
+let currentQuestion = 0;
+const selectedAnswers = new Array(questions.length).fill(null);
+let timer = 60 * 60; // Timer in seconds (1 hour)
 
-    const questionImage = document.getElementById("question-image");
-    const optionsContainer = document.getElementById("options-container");
-    const questionNavigation = document.getElementById("question-navigation");
-    const timerDisplay = document.getElementById("timer");
+const questionImage = document.getElementById("question-image");
+const optionsContainer = document.getElementById("options-container");
+const questionNavigation = document.getElementById("question-navigation");
+const timerElement = document.getElementById("timer");
+const submitModal = document.getElementById("submit-modal");
+const attemptedQuestionsElement = document.getElementById("attempted-questions");
+const unansweredQuestionsElement = document.getElementById("unanswered-questions");
+const totalTimeElement = document.getElementById("total-time");
 
-    // Timer function
-    function startTimer() {
-      timerInterval = setInterval(() => {
-        if (remainingTime <= 0) {
-          clearInterval(timerInterval);
-          showSubmitModal();
-        } else {
-          remainingTime--;
-          const minutes = Math.floor(remainingTime / 60);
-          const seconds = remainingTime % 60;
-          timerDisplay.innerText = `TIME: ${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
-        }
-      }, 1000);
-    }
+// Initialize quiz panel
+function initializeQuiz() {
+displayQuestion();
+createNavigationButtons();
+updateTimer();
+setInterval(updateTimer, 1000);
+}
 
-    // Load question
-    function loadQuestion(index) {
-      const question = selectedChapter.questions[index];
-      questionImage.innerHTML = `<img src="${question.questionImage}" alt="Question Image" style="max-width: 100%; max-height: 100%;">`;
-      optionsContainer.innerHTML = question.options
-        .map(
-          (option, idx) => `
-          <button class="answer-option ${answers[index] === idx ? 'selected' : ''}" data-index="${idx}">
-            ${option}
-          </button>`
-        )
-        .join("");
+// Display current question
+function displayQuestion() {
+const question = questions[currentQuestion];
+questionImage.innerHTML = `<img src="${question.image}" alt="Question Image" style="width: 100%; border-radius: 10px;">`;
+optionsContainer.innerHTML = "";
 
-      // Update question navigation
-      questionNavigation.innerHTML = selectedChapter.questions
-        .map(
-          (question, idx) => `
-          <div class="question-number ${answers[idx] !== null ? 'selected' : ''}" data-index="${idx}">
-            ${idx + 1}
-          </div>`
-        )
-        .join("");
+question.options.forEach((option, index) => {
+  const optionButton = document.createElement("button");
+  optionButton.textContent = option;
+  optionButton.classList.add("answer-option");
+  if (selectedAnswers[currentQuestion] === index) {
+    optionButton.classList.add("selected");
+  }
+  optionButton.addEventListener("click", () => selectAnswer(index));
+  optionsContainer.appendChild(optionButton);
+});
 
-      // Add event listeners for options
-      const answerOptions = optionsContainer.querySelectorAll(".answer-option");
-      answerOptions.forEach((option) => {
-        option.addEventListener("click", () => {
-          answers[index] = parseInt(option.dataset.index);
-          loadQuestion(index);
-        });
-      });
-    }
+updateNavigationButtons();
+}
 
-    // Handle question navigation
-    questionNavigation.addEventListener("click", (event) => {
-      if (event.target.classList.contains("question-number")) {
-        currentQuestionIndex = parseInt(event.target.dataset.index);
-        loadQuestion(currentQuestionIndex);
-      }
-    });
+// Select an answer
+function selectAnswer(index) {
+selectedAnswers[currentQuestion] = index;
+displayQuestion();
+}
 
-    // Handle clear answer
-    document.getElementById("clear-answer").addEventListener("click", () => {
-      answers[currentQuestionIndex] = null;
-      loadQuestion(currentQuestionIndex);
-    });
+// Clear selected answer
+document.getElementById("clear-answer").addEventListener("click", () => {
+selectedAnswers[currentQuestion] = null;
+displayQuestion();
+});
 
-    // Handle previous/next question
-    document.getElementById("previous").addEventListener("click", () => {
-      if (currentQuestionIndex > 0) {
-        currentQuestionIndex--;
-        loadQuestion(currentQuestionIndex);
-      }
-    });
+// Navigate to next question
+document.getElementById("next").addEventListener("click", () => {
+if (currentQuestion < questions.length - 1) {
+  currentQuestion++;
+  displayQuestion();
+}
+});
 
-    document.getElementById("next").addEventListener("click", () => {
-      if (currentQuestionIndex < selectedChapter.questions.length - 1) {
-        currentQuestionIndex++;
-        loadQuestion(currentQuestionIndex);
-      }
-    });
+// Navigate to previous question
+document.getElementById("previous").addEventListener("click", () => {
+if (currentQuestion > 0) {
+  currentQuestion--;
+  displayQuestion();
+}
+});
 
-    // Handle submit
-    document.getElementById("submit").addEventListener("click", showSubmitModal);
+// Create navigation buttons
+function createNavigationButtons() {
+questionNavigation.innerHTML = "";
+questions.forEach((_, index) => {
+  const navButton = document.createElement("div");
+  navButton.textContent = index + 1;
+  navButton.classList.add("question-number");
+  navButton.addEventListener("click", () => {
+    currentQuestion = index;
+    displayQuestion();
+  });
+  questionNavigation.appendChild(navButton);
+});
+}
 
-    function showSubmitModal() {
-      const attemptedQuestions = answers.filter((answer) => answer !== null).length;
-      const unansweredQuestions = answers.filter((answer) => answer === null).length;
-      const score = calculateScore();
-      const timeTaken = formatTime(60 * 60 - remainingTime);
+// Update navigation button styles
+function updateNavigationButtons() {
+document.querySelectorAll(".question-number").forEach((button, index) => {
+  button.classList.toggle("selected", index === currentQuestion);
+});
+}
 
-      document.getElementById("attempted-questions").innerText = `Attempted: ${attemptedQuestions}`;
-      document.getElementById("unanswered-questions").innerText = `Unanswered: ${unansweredQuestions}`;
-      document.getElementById("total-score").innerText = `Score: ${score}/${selectedChapter.questions.length}`;
-      document.getElementById("total-time").innerText = `Time Taken: ${timeTaken}`;
-      document.getElementById("submit-modal").style.display = "flex";
-    }
+// Timer functionality
+function updateTimer() {
+const minutes = Math.floor(timer / 60);
+const seconds = timer % 60;
+timerElement.textContent = `TIME: ${minutes}:${seconds.toString().padStart(2, "0")}`;
+if (timer > 0) {
+  timer--;
+} else {
+  showSubmitModal();
+}
+}
 
-    function handleFinalSubmit() {
-      // Stop the timer when final submit is clicked
-      clearInterval(timerInterval);
-    
-      // Calculate the score
-      let score = 0;
-      selectedChapter.questions.forEach((question, index) => {
-        if (answers[index] !== null && answers[index] === question.correctAnswer) {
-          score++;
-        }
-      });
-    
-      // Store the score, attempted, unanswered, and time in localStorage
-      localStorage.setItem("attempted", answers.filter((answer) => answer !== null).length);
-      localStorage.setItem("unanswered", answers.filter((answer) => answer === null).length);
-    
-      // Format the time in min:sec and save it
-      const timeTakenFormatted = formatTime(60 * 60 - remainingTime); // Time used during quiz
-      localStorage.setItem("timeTaken", timeTakenFormatted);
-      localStorage.setItem("score", score); // Store score
-    
-      // Redirect to the result page after submission
-      window.location.href = "result.html"; // Redirect to result page
-    }
-    
-    // Start the quiz
-    loadQuestion(currentQuestionIndex);
-    startTimer();
+// Show the submission modal
+document.getElementById("submit").addEventListener("click", showSubmitModal);
+
+function showSubmitModal() {
+const attempted = selectedAnswers.filter((ans) => ans !== null).length;
+const unanswered = questions.length - attempted;
+
+attemptedQuestionsElement.textContent = `Attempted Questions: ${attempted}`;
+unansweredQuestionsElement.textContent = `Unanswered Questions: ${unanswered}`;
+totalTimeElement.textContent = `Total Time Taken: ${Math.floor((60 * 60 - timer) / 60)} minutes`;
+
+submitModal.style.display = "flex";
+}
+
+// Hide the submission modal
+document.getElementById("cancel-submit").addEventListener("click", () => {
+submitModal.style.display = "none";
+});
+
+// Final submission
+document.getElementById("final-submit").addEventListener("click", () => {
+  const attempted = selectedAnswers.filter((ans) => ans !== null).length;
+  const unanswered = questions.length - attempted;
+  const correctAnswers = selectedAnswers.reduce((count, answer, index) => {
+    return answer === questions[index].correct ? count + 1 : count;
+  }, 0);
+
+  // Create result data
+  const resultData = {
+    attempted: attempted,
+    unanswered: unanswered,
+    correct: correctAnswers,
+    totalQuestions: questions.length,
+    timeTaken: 60 * 60 - timer, // Total time in seconds
+  };
+
+  // Pass the result data to the result page
+  localStorage.setItem("quizResults", JSON.stringify(resultData));
+
+  // Redirect to result.html
+  window.location.href = "result.html";
+});
+
+
+// Initialize the quiz
+initializeQuiz();
+
   </script>
 </body>
 </html>
