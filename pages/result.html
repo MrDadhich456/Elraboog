@@ -3,146 +3,134 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz Result</title>
+  <title>Quiz Results</title>
   <style>
-    /* General Styles */
     body {
-      margin: 0;
-      padding: 0;
-      background-color: #0D1117;
-      color: white;
-      font-family: 'Roboto', sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-
-    .container {
-      max-width: 800px;
-      width: 90%;
-      background-color: #1E262E;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      font-family: Arial, sans-serif;
       text-align: center;
-    }
-
-    .result-summary h1 {
-      margin-bottom: 20px;
-      color: #10b981;
-    }
-
-    .result-details p {
-      margin: 10px 0;
-      font-size: 18px;
-    }
-
-    .sidebar {
-      margin-top: 20px;
       padding: 20px;
-      background-color: #28353D;
-      border-radius: 10px;
-    }
-
-    .sidebar h3 {
-      margin-bottom: 15px;
-      color: #10b981;
-    }
-
-    .questions-review {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-      gap: 10px;
-    }
-
-    .question-box {
-      width: 50px;
-      height: 50px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 14px;
-      border-radius: 50%;
+      background-color: #121212;
       color: white;
-      font-weight: bold;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
-
+    .result-container {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #444;
+      border-radius: 10px;
+      background-color: #1e1e1e;
+    }
+    h1 {
+      color: #4CAF50;
+    }
+    .summary {
+      margin: 10px 0;
+    }
+    .button-container {
+      margin-top: 20px;
+    }
+    .button-container button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+    }
+    .retry {
+      background-color: #2196F3;
+      color: white;
+    }
+    .home {
+      background-color: #4CAF50;
+      color: white;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #444;
+      text-align: left;
+    }
+    th {
+      background-color: #333;
+      color: white;
+    }
     .correct {
-      background-color: #10b981;
+      color: #4CAF50;
     }
-
     .incorrect {
-      background-color: #e74c3c;
+      color: #F44336;
     }
-
     .unanswered {
-      background-color: #8a9ca7;
+      color: #FFC107;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="result-summary">
-      <h1>Quiz Result</h1>
-      <div class="result-details">
-        <p id="time-taken"></p>
-        <p id="total-correct"></p>
-        <p id="total-incorrect"></p>
-        <p id="total-marks"></p>
-      </div>
-    </div>
-    <div class="sidebar">
-      <h3>Question Review</h3>
-      <div class="questions-review" id="questions-review"></div>
+  <div class="result-container">
+    <h1>Quiz Results</h1>
+    <p class="summary" id="score"></p>
+    <p class="summary" id="correct"></p>
+    <p class="summary" id="incorrect"></p>
+    <h2>Question Breakdown</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Question</th>
+          <th>Your Answer</th>
+          <th>Correct Answer</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="breakdown"></tbody>
+    </table>
+    <div class="button-container">
+      <button class="retry" onclick="retryQuiz()">Retry Quiz</button>
+      <button class="home" onclick="goHome()">Go to Home</button>
     </div>
   </div>
 
   <script>
-    // Retrieve data from localStorage or URL parameters
-    const quizData = JSON.parse(localStorage.getItem('quizData')); // Example of how data might be passed
-    const answers = quizData.answers;
-    const questions = quizData.questions;
-    const startTime = new Date(quizData.startTime);
-    const endTime = new Date(quizData.endTime);
-    const marksPerCorrect = 4;
-    const marksPerIncorrect = -1;
+    // Retrieve and display results
+    const results = JSON.parse(localStorage.getItem('quizResults'));
+    if (results) {
+      document.getElementById('score').textContent = `Score: ${results.score}`;
+      document.getElementById('correct').textContent = `Total Correct Answers: ${results.correctCount}`;
+      document.getElementById('incorrect').textContent = `Total Incorrect Answers: ${results.incorrectCount}`;
 
-    // Calculate quiz results
-    const correctAnswers = answers.filter((ans, idx) => ans !== null && ans === questions[idx].correctAnswer).length;
-    const incorrectAnswers = answers.filter((ans, idx) => ans !== null && ans !== questions[idx].correctAnswer).length;
-    const unansweredQuestions = questions.length - correctAnswers - incorrectAnswers;
-    const totalMarks = correctAnswers * marksPerCorrect + incorrectAnswers * marksPerIncorrect;
+      const breakdown = document.getElementById('breakdown');
+      results.results.forEach((result, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${result.question}</td>
+          <td class="${result.isCorrect ? 'correct' : result.userAnswer === 'Unanswered' ? 'unanswered' : 'incorrect'}">
+            ${result.userAnswer}
+          </td>
+          <td>${result.correctOption}</td>
+          <td class="${result.isCorrect ? 'correct' : result.userAnswer === 'Unanswered' ? 'unanswered' : 'incorrect'}">
+            ${result.isCorrect ? 'Correct' : result.userAnswer === 'Unanswered' ? 'Unanswered' : 'Incorrect'}
+          </td>
+        `;
+        breakdown.appendChild(row);
+      });
+    } else {
+      document.body.innerHTML = "<h1>No results available. Please take the quiz first.</h1>";
+    }
 
-    // Calculate time taken
-    const timeTaken = Math.floor((endTime - startTime) / 1000); // Time in seconds
-    const minutes = Math.floor(timeTaken / 60);
-    const seconds = timeTaken % 60;
+    // Retry Quiz
+    function retryQuiz() {
+      window.location.href = 'quiz.html'; // Replace with the path to your quiz page
+    }
 
-    // Display results
-    document.getElementById("time-taken").innerText = `Total Time Taken: ${minutes}m ${seconds}s`;
-    document.getElementById("total-correct").innerText = `Total Correct: ${correctAnswers}`;
-    document.getElementById("total-incorrect").innerText = `Total Incorrect: ${incorrectAnswers}`;
-    document.getElementById("total-marks").innerText = `Total Marks: ${totalMarks}`;
-
-    // Render question review
-    const questionsReview = document.getElementById("questions-review");
-    questions.forEach((question, idx) => {
-      const questionBox = document.createElement("div");
-      questionBox.classList.add("question-box");
-
-      if (answers[idx] === null) {
-        questionBox.classList.add("unanswered");
-      } else if (answers[idx] === question.correctAnswer) {
-        questionBox.classList.add("correct");
-      } else {
-        questionBox.classList.add("incorrect");
-      }
-
-      questionBox.innerText = idx + 1; // Display question number
-      questionsReview.appendChild(questionBox);
-    });
+    // Go to Home
+    function goHome() {
+      window.location.href = 'index.html'; // Replace with the path to your home page
+    }
   </script>
 </body>
 </html>
