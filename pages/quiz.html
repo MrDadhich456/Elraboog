@@ -437,12 +437,7 @@
         submitModal.style.display = 'flex';
       });
     
-      // Finalize the submission
-      document.getElementById('final-submit').addEventListener('click', () => {
-        alert('Quiz Submitted! Thank you for participating.');
-        // Redirect or handle post-submission logic here
-        submitModal.style.display = 'none';
-      });
+
     
       // Cancel the submission
       document.getElementById('cancel-submit').addEventListener('click', () => {
@@ -483,22 +478,33 @@
         return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
       }
       document.getElementById('final-submit').addEventListener('click', () => {
+        console.log("Storing results and redirecting...");
+        
         const results = questions.map((question, index) => {
           const userAnswer = userAnswers[index];
-          const isCorrect = userAnswer === question.correctOption; // Check if the answer is correct
+          const isCorrect = userAnswer === question.correct; // Compare with question.correct
+          
           return {
             question: question.question,
-            correctOption: question.options[question.correctOption],
-            userAnswer: userAnswer !== null ? question.options[userAnswer] : "Unanswered",
+            correctOption: question.options ? question.options[question.correct] : question.correct,
+            userAnswer: userAnswer !== null ? (question.options ? question.options[userAnswer] : userAnswer) : "Unanswered",
             isCorrect,
           };
         });
       
-        const correctCount = results.filter(r => r.isCorrect).length;
+        let score = 0;
+        const correctCount = results.filter(r => {
+          if (r.isCorrect) {
+            score += 4;  // +4 for correct answer
+            return true;
+          }
+          return false;
+        }).length;
+      
         const incorrectCount = results.filter(r => r.userAnswer !== "Unanswered" && !r.isCorrect).length;
       
-        // Marking scheme: +4 for correct, -1 for incorrect
-        const score = correctCount * 4 - incorrectCount;
+        // Subtract 1 for each incorrect answer
+        score -= incorrectCount;
       
         // Store results in localStorage
         localStorage.setItem('quizResults', JSON.stringify({
@@ -509,11 +515,16 @@
           results,
         }));
       
-        // Redirect to result.html
+        // Log to confirm redirection
+        console.log("Results stored. Now redirecting...");
+      
+        // Redirect to the result page
         window.location.href = 'result.html';
       });
       
+    
       
+ 
     
       // Initialize the quiz
       initializeQuiz();
