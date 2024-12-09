@@ -70,11 +70,13 @@
 
     .options, .integer-answer {
       display: grid;
-      gap: 10px;
+      grid-template-columns: repeat(2, 1fr); /* Create two equal columns */
+      gap: 10px; /* Spacing between grid items */
       width: 100%;
       max-width: 600px;
       margin-bottom: 20px;
     }
+    
 
     .answer-option {
       padding: 20px 40px;
@@ -286,8 +288,8 @@
       const questions = [
         {
           type: "mcq",
-          question: "What is the capital of France?",
-          options: ["Berlin", "Madrid", "Paris", "Rome"],
+          image: "../assest/physics/kinematics/quiz 1/1.png",
+          options: ["Option A", "Option B", "Option C", "Option D"],
           correct: 2
         },
         {
@@ -298,7 +300,7 @@
         {
           type: "mcq",
           question: "Which planet is known as the Red Planet?",
-          options: ["Earth", "Mars", "Jupiter", "Venus"],
+          options: ["Option A", "Option B", "Option C", "Option D"],
           correct: 1
         },
         {
@@ -340,8 +342,18 @@
       // Render the question
       function renderQuestion(index) {
         const question = questions[index];
-        questionImage.textContent = question.question;
+        questionImage.innerHTML = ''; // Clear any existing content
       
+        // Create an image element for the question
+        const imgElement = document.createElement('img');
+        imgElement.src = question.image; // Set the source to the question's image
+        imgElement.alt = question.question; // Add alt text for accessibility
+        imgElement.style.maxWidth = "100%"; // Adjust image style if needed
+      
+        // Append the image to the question container
+        questionImage.appendChild(imgElement);
+      
+        // Display options or integer input
         if (question.type === "mcq") {
           integerContainer.style.display = "none";
           optionsContainer.style.display = "grid";

@@ -79,8 +79,8 @@
     <table>
       <thead>
         <tr>
-          <th>#</th>
-          <th>Question</th>
+          <th>Question No.</th>
+          <!-- <th>Question</th> -->
           <th>Your Answer</th>
           <th>Correct Answer</th>
           <th>Status</th>
@@ -107,7 +107,7 @@
         const row = document.createElement('tr');
         row.innerHTML = `
           <td>${index + 1}</td>
-          <td>${result.question}</td>
+          <!-- <td>${result.question}</td> -->
           <td class="${result.isCorrect ? 'correct' : result.userAnswer === 'Unanswered' ? 'unanswered' : 'incorrect'}">
             ${result.userAnswer}
           </td>
