@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* General Styles */
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0D1117;
+      color: white;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    .header {
+      background-color: #0D1117;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #28353D;
+    }
+
+    .header img {
+      height: 40px;
+    }
+
+    .header .timer {
+      font-size: 16px;
+      color: #d4d4d4;
+    }
+
+    main {
+      display: flex;
+      flex: 1;
+    }
+
+    .quiz-container {
+      flex: 3;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .question-image {
+      width: 100%;
+      max-width: 500px;
+      height: 450px;
+      background-color: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      color: black;
+      margin-bottom: 30px;
+      border-radius: 10px;
+      overflow-y: auto;
+    }
+
+    .options, .integer-answer {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); /* Create two equal columns */
+      gap: 10px; /* Spacing between grid items */
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 20px;
+    }
+    
+
+    .answer-option {
+      padding: 20px 40px;
+      font-size: 16px;
+      background-color: #ECF2F8;
+      border: none;
+      border-radius: 12px;
+      color: #000000;
+      cursor: pointer;
+      text-align: center;
+      border: 1px solid #8A9CA7;
+      box-shadow: 0 0 6px rgba(138, 156, 167, 0.6);
+    }
+
+    .answer-option:hover {
+      background-color: #444;
+    }
+    .answer-option.selected {
+      background-color: #0D1117;
+      color: #ffffff;
+      border: 1px solid #d4d4d4;
+    }
+    
+
+    .integer-answer input {
+      padding: 15px;
+      font-size: 16px;
+      border: 1px solid #8A9CA7;
+      border-radius: 10px;
+      background-color: #ECF2F8;
+      color: #000000;
+    }
+
+    .navigation-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .navigation-buttons button {
+      padding: 15px 30px;
+      font-size: 16px;
+      background-color: #ECF2F8;
+      border: none;
+      border-radius: 5px;
+      color: #000000;
+      cursor: pointer;
+      border: 1px solid #8A9CA7;
+      box-shadow: 0 0 6px rgba(138, 156, 167, 0.6);
+    }
+
+    .navigation-buttons button:hover {
+      background-color: #444;
+      color: white;
+    }
+
+    .sidebar {
+      flex: 1;
+      background-color: #28353D;
+      margin: 20px 5px;
+      border-radius: 12px 0px 0px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .text {
+      width: 100%;
+      border-bottom: 2px solid #ECF2F8;
+      text-align: center;
+    }
+
+    .sidebar h3 {
+      color: #ffffff;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .question-navigation {
+      padding: 16px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 23px;
+    }
+
+    .question-number {
+      width: 50px;
+      height: 50px;
+      background-color: #ECF2F8;
+      color: #000000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .question-number:hover {
+      background-color: #0D1117;
+      color: #ffffff;
+    }
+    .question-number.selected {
+      background-color: #0D1117;
+      color: #ffffff;
+      border: 1px solid #ECF2F8;
+    }
+
+    #submit {
+      display: block;
+      width: 50%;
+      margin: 10px auto 15px;
+      padding: 15px 30px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #000000;
+      background-color: #ECF2F8;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    #submit:hover {
+      background-color: #444;
+      color: white;
+    }
+
+    #submit-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #28353D;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      color: white;
+      width: 80%;
+      max-width: 400px;
+    }
+
+    .modal-content button {
+      margin: 20px;
+      background-color: #ECF2F8;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      color: #000000;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .modal-content button:hover {
+      background-color: #444;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <img src="/assest/img/logo/Black_And_White_Illustrated_Eagle_Logo__1___1_-removebg 1.png" alt="Logo">
+      <div class="timer" id="timer">TIME: 60:00</div>
+    </header>
+    <main>
+      <div class="quiz-container">
+        <div class="question-image" id="question-image">Image</div>
+        <div class="options" id="options-container"></div>
+        <div class="integer-answer" id="integer-container" style="display: none;">
+          <input type="number" id="integer-input" placeholder="Enter your answer">
+        </div>
+        <div class="navigation-buttons">
+          <button id="previous">Previous</button>
+          <button id="clear-answer">Clear Answer</button>
+          <button id="next">Next</button>
+        </div>
+      </div>
+      <aside class="sidebar">
+        <div class="text">
+          <h3>QUESTIONS</h3>
+        </div>
+        <div class="question-navigation" id="question-navigation"></div>
+        <button id="submit">Submit</button>
+      </aside>
+    </main>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div id="submit-modal">
+    <div class="modal-content">
+      <h3>Are you sure you want to submit?</h3>
+      <p id="attempted-questions"></p>
+      <p id="unanswered-questions"></p>
+      <p id="total-score"></p>
+      <p id="total-time"></p>
+      <button id="final-submit">Yes, Submit</button>
+      <button id="cancel-submit">Cancel</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const questions = [
+        {
+          type: "mcq",
+          image: "/assest/CHEMISTRY/alcohol/1.png",
+          options: ["Option A", "Option B", "Option C", "Option D"],
+          correct: 3
+        },
+        {
+          type: "mcq",
+          image: "/assest/CHEMISTRY/alcohol/2.png",
+          options: ["Option A", "Option B", "Option C", "Option D"],
+          correct: 2
+        },
+        {
+          type: "mcq",
+          image: "/assest/CHEMISTRY/alcohol/3.png",
+          options: ["Option A", "Option B", "Option C", "Option D"],
+          correct: 2
+        },
+        {
+          type: "mcq",
+          image: "/assest/CHEMISTRY/alcohol/4.png",
+          options: ["Option A", "Option B", "Option C", "Option D"],
+          correct: 3
+        },
+        {
+          type: "mcq",
+          image: "/assest/CHEMISTRY/alcohol/5.png",
+          options: ["Option A", "Option B", "Option C", "Option D"],
+          correct: 1
+        },
+        {
+          type: "mcq",
+          image: "/assest/CHEMISTRY/alcohol/6.png",
+          options: ["Option A", "Option B", "Option C", "Option D"],
+          correct: 1
+        },
+        {
+          type: "mcq",
+          image: "/assest/CHEMISTRY/alcohol/7.png",
+          options: ["Option A", "Option B", "Option C", "Option D"],
+          correct: 0
+        },
+        {
+          type: "mcq",
+          image: "/assest/CHEMISTRY/alcohol/8.png",
+          options: ["Option A", "Option B", "Option C", "Option D"],
+          correct: 0
+        },
+        {
+          type: "mcq",
+          image: "/assest/CHEMISTRY/alcohol/9.png",
+          options: ["Option A", "Option B", "Option C", "Option D"],
+          correct: 1
+        },
+        {
+          type: "mcq",
+          image: "/assest/CHEMISTRY/alcohol/10.png",
+          options: ["Option A", "Option B", "Option C", "Option D"],
+          correct: 0
+        },
+        {
+          type: "mcq",
+          image: "/assest/CHEMISTRY/alcohol/11.png",
+          options: ["Option A", "Option B", "Option C", "Option D"],
+          correct: 0
+        },
+        {
+          type: "mcq",
+          image: "/assest/CHEMISTRY/alcohol/12.png",
+          options: ["Option A", "Option B", "Option C", "Option D"],
+          correct: 0
+        },
+        {
+          type: "mcq",
+          image: "/assest/CHEMISTRY/alcohol/13.png",
+          options: ["Option A", "Option B", "Option C", "Option D"],
+          correct: 1
+        },
+        {
+          type: "mcq",
+          image: "/assest/CHEMISTRY/alcohol/14.png",
+          options: ["Option A", "Option B", "Option C", "Option D"],
+          correct: 3
+        },
+        {
+          type: "mcq",
+          image: "/assest/CHEMISTRY/alcohol/15.png",
+          options: ["Option A", "Option B", "Option C", "Option D"],
+          correct: 1
+        },
+        {
+          type: "mcq",
+          image: "/assest/CHEMISTRY/alcohol/16.png",
+          options: ["Option A", "Option B", "Option C", "Option D"],
+          correct: 1
+        },
+        {
+          type: "mcq",
+          image: "/assest/CHEMISTRY/alcohol/17.png",
+          options: ["Option A", "Option B", "Option C", "Option D"],
+          correct: 3
+        },
+        {
+          type: "mcq",
+          image: "/assest/CHEMISTRY/alcohol/18.png",
+          options: ["Option A", "Option B", "Option C", "Option D"],
+          correct: 1
+        },
+        {
+          type: "mcq",
+          image: "/assest/CHEMISTRY/alcohol/19.png",
+          options: ["Option A", "Option B", "Option C", "Option D"],
+          correct: 0
+        },
+        {
+          type: "mcq",
+          image: "/assest/CHEMISTRY/alcohol/20.png",
+          options: ["Option A", "Option B", "Option C", "Option D"],
+          correct: 2
+        },
+       
+        {
+          type: "integer",
+          image: "/assest/CHEMISTRY/alcohol/21.png",
+          correct: 5
+        },
+        {
+          type: "integer",
+          image: "/assest/CHEMISTRY/alcohol/22.png",
+          correct: 5
+        },
+        {
+          type: "integer",
+          image: "/assest/CHEMISTRY/alcohol/23.png",
+          correct: 5
+        },
+        {
+          type: "integer",
+          image: "/assest/CHEMISTRY/alcohol/24.png",
+          correct: 346
+        },
+        {
+          type: "integer",
+          image: "/assest/CHEMISTRY/alcohol/25.png",
+          correct: 25
+        },
+      
+      ];
+    
+      const timerElement = document.getElementById('timer');
+      const questionImage = document.getElementById('question-image');
+      const optionsContainer = document.getElementById('options-container');
+      const integerContainer = document.getElementById('integer-container');
+      const integerInput = document.getElementById('integer-input');
+      const questionNavigation = document.getElementById('question-navigation');
+      const submitModal = document.getElementById('submit-modal');
+      const attemptedQuestionsElement = document.getElementById('attempted-questions');
+      const unansweredQuestionsElement = document.getElementById('unanswered-questions');
+      const totalScoreElement = document.getElementById('total-score');
+      const totalTimeElement = document.getElementById('total-time');
+    
+      let currentQuestionIndex = 0;
+      const userAnswers = new Array(questions.length).fill(null);
+      let timer = 60 * 60; // 60 minutes
+    
+      // Initialize quiz UI
+      function initializeQuiz() {
+        renderQuestion(currentQuestionIndex);
+        renderQuestionNavigation();
+        startTimer();
+      }
+    
+      // Render the question
+      function renderQuestion(index) {
+        const question = questions[index];
+        questionImage.innerHTML = ''; // Clear any existing content
+      
+        // Create an image element for the question
+        const imgElement = document.createElement('img');
+        imgElement.src = question.image; // Set the source to the question's image
+        imgElement.alt = question.question; // Add alt text for accessibility
+        imgElement.style.maxWidth = "100%"; // Adjust image style if needed
+      
+        // Append the image to the question container
+        questionImage.appendChild(imgElement);
+      
+        // Display options or integer input
+        if (question.type === "mcq") {
+          integerContainer.style.display = "none";
+          optionsContainer.style.display = "grid";
+          optionsContainer.innerHTML = "";
+          question.options.forEach((option, i) => {
+            const button = document.createElement('button');
+            button.textContent = option;
+            button.className = 'answer-option';
+            button.addEventListener('click', () => selectAnswer(index, i));
+            if (userAnswers[index] === i) {
+              button.classList.add('selected');
+            }
+            optionsContainer.appendChild(button);
+          });
+        } else if (question.type === "integer") {
+          optionsContainer.style.display = "none";
+          integerContainer.style.display = "block";
+          integerInput.value = userAnswers[index] !== null ? userAnswers[index] : "";
+          integerInput.addEventListener('input', () => selectAnswer(index, parseInt(integerInput.value, 10)));
+        }
+      
+        renderQuestionNavigation(); // Update navigation after rendering the question
+      }
+      
+      
+    
+      // Render question navigation buttons
+// Render question navigation buttons
+function renderQuestionNavigation() {
+  questionNavigation.innerHTML = "";
+  questions.forEach((_, i) => {
+    const button = document.createElement('div');
+    button.textContent = i + 1;
+    button.className = `question-number ${i === currentQuestionIndex ? 'selected' : ''}`;
+    if (userAnswers[i] !== null) {
+      button.classList.add('answered');
+    }
+    button.addEventListener('click', () => goToQuestion(i));
+    questionNavigation.appendChild(button);
+  });
+}
+
+    
+      // Select an answer for a question
+      function selectAnswer(index, answer) {
+        userAnswers[index] = answer;
+      
+        // Remove 'selected' class from all options
+        const options = document.querySelectorAll('.options .answer-option');
+        options.forEach(option => option.classList.remove('selected'));
+      
+        // Add 'selected' class to the clicked option
+        options[answer].classList.add('selected');
+      
+        renderQuestionNavigation();
+      }
+      
+    
+      // Navigate to a specific question
+      function goToQuestion(index) {
+        currentQuestionIndex = index;
+        renderQuestion(index);
+      }
+    
+      // Handle Previous and Next buttons
+      document.getElementById('previous').addEventListener('click', () => {
+        if (currentQuestionIndex > 0) {
+          currentQuestionIndex--;
+          renderQuestion(currentQuestionIndex);
+        }
+      });
+    
+      document.getElementById('next').addEventListener('click', () => {
+        if (currentQuestionIndex < questions.length - 1) {
+          currentQuestionIndex++;
+          renderQuestion(currentQuestionIndex);
+        }
+      });
+    
+      // Clear the selected answer for the current question
+      document.getElementById('clear-answer').addEventListener('click', () => {
+        userAnswers[currentQuestionIndex] = null;
+        renderQuestion(currentQuestionIndex);
+        renderQuestionNavigation();
+      });
+    
+      // Submit the quiz
+      document.getElementById('submit').addEventListener('click', () => {
+        const attempted = userAnswers.filter(answer => answer !== null).length;
+        const unanswered = userAnswers.length - attempted;
+        const score = calculateScore();
+    
+        attemptedQuestionsElement.textContent = `Attempted Questions: ${attempted}`;
+        unansweredQuestionsElement.textContent = `Unanswered Questions: ${unanswered}`;
+        totalScoreElement.textContent = `Total Score: ${score}`;
+        totalTimeElement.textContent = `Time Taken: ${formatTime(60 * 60 - timer)}`;
+    
+        submitModal.style.display = 'flex';
+      });
+    
+
+    
+      // Cancel the submission
+      document.getElementById('cancel-submit').addEventListener('click', () => {
+        submitModal.style.display = 'none';
+      });
+    
+      // Calculate score
+      function calculateScore() {
+        let score = 0;
+        questions.forEach((question, i) => {
+          if (question.type === "mcq" && userAnswers[i] === question.correct) {
+            score++;
+          } else if (question.type === "integer" && userAnswers[i] === question.correct) {
+            score++;
+          }
+        });
+        return score;
+      }
+    
+      // Timer logic
+      function startTimer() {
+        const timerInterval = setInterval(() => {
+          if (timer <= 0) {
+            clearInterval(timerInterval);
+            alert('Time is up! Quiz submitted automatically.');
+            // Auto-submit logic here
+            return;
+          }
+          timer--;
+          timerElement.textContent = `TIME: ${formatTime(timer)}`;
+        }, 1000);
+      }
+    
+      // Format time as MM:SS
+      function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+      }
+      document.getElementById('final-submit').addEventListener('click', () => {
+        console.log("Storing results and redirecting...");
+        
+        const results = questions.map((question, index) => {
+          const userAnswer = userAnswers[index];
+          const isCorrect = userAnswer === question.correct; // Compare with question.correct
+          
+          return {
+            question: question.question,
+            correctOption: question.options ? question.options[question.correct] : question.correct,
+            userAnswer: userAnswer !== null ? (question.options ? question.options[userAnswer] : userAnswer) : "Unanswered",
+            isCorrect,
+          };
+        });
+      
+        let score = 0;
+        const correctCount = results.filter(r => {
+          if (r.isCorrect) {
+            score += 4;  // +4 for correct answer
+            return true;
+          }
+          return false;
+        }).length;
+      
+        const incorrectCount = results.filter(r => r.userAnswer !== "Unanswered" && !r.isCorrect).length;
+      
+        // Subtract 1 for each incorrect answer
+        score -= incorrectCount;
+      
+        // Store results in localStorage
+        localStorage.setItem('quizResults', JSON.stringify({
+          score,
+          correctCount,
+          incorrectCount,
+          totalQuestions: questions.length,
+          results,
+        }));
+      
+        // Log to confirm redirection
+        console.log("Results stored. Now redirecting...");
+      
+        // Redirect to the result page
+        window.location.href = 'rstnlm.html';
+      });
+      
+    
+      
+ 
+    
+      // Initialize the quiz
+      initializeQuiz();
+    });
+    
+</script>
+</bodCHEMISTRY/alcohol
