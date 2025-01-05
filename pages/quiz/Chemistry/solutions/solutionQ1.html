@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background-color: #121212;
+      color: white;
+    }
+    .result-container {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #444;
+      border-radius: 10px;
+      background-color: #1e1e1e;
+    }
+    h1 {
+      color: #4CAF50;
+    }
+    .summary {
+      margin: 10px 0;
+    }
+    .button-container {
+      margin-top: 20px;
+    }
+    .button-container button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+    }
+    .retry {
+      background-color: #2196F3;
+      color: white;
+    }
+    .home {
+      background-color: #4CAF50;
+      color: white;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #444;
+      text-align: left;
+    }
+    th {
+      background-color: #333;
+      color: white;
+    }
+    .correct {
+      color: #4CAF50;
+    }
+    .incorrect {
+      color: #F44336;
+    }
+    .unanswered {
+      color: #FFC107;
+    }
+  </style>
+</head>
+<body>
+  <div class="result-container">
+    <h1>Quiz Results</h1>
+    <p class="summary" id="score"></p>
+    <p class="summary" id="correct"></p>
+    <p class="summary" id="incorrect"></p>
+    <h2>Question Breakdown</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Question No.</th>
+          <!-- <th>Question</th> -->
+          <th>Your Answer</th>
+          <th>Correct Answer</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="breakdown"></tbody>
+    </table>
+    <div class="button-container">
+      <button class="retry" onclick="retryQuiz()">Retry Quiz</button>
+      <button class="home" onclick="goHome()">Go to Home</button>
+    </div>
+  </div>
+
+  <script>
+    // Retrieve and display results
+    const results = JSON.parse(localStorage.getItem('quizResults'));
+    if (results) {
+      document.getElementById('score').textContent = `Score: ${results.score}`;
+      document.getElementById('correct').textContent = `Total Correct Answers: ${results.correctCount}`;
+      document.getElementById('incorrect').textContent = `Total Incorrect Answers: ${results.incorrectCount}`;
+
+      const breakdown = document.getElementById('breakdown');
+      results.results.forEach((result, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <!-- <td>${result.question}</td> -->
+          <td class="${result.isCorrect ? 'correct' : result.userAnswer === 'Unanswered' ? 'unanswered' : 'incorrect'}">
+            ${result.userAnswer}
+          </td>
+          <td>${result.correctOption}</td>
+          <td class="${result.isCorrect ? 'correct' : result.userAnswer === 'Unanswered' ? 'unanswered' : 'incorrect'}">
+            ${result.isCorrect ? 'Correct' : result.userAnswer === 'Unanswered' ? 'Unanswered' : 'Incorrect'}
+          </td>
+        `;
+        breakdown.appendChild(row);
+      });
+    } else {
+      document.body.innerHTML = "<h1>No results available. Please take the quiz first.</h1>";
+    }
+
+    // Retry Quiz
+    function retryQuiz() {
+      window.location.href = 'nlmQ1.html'; // Replace with the path to your quiz page
+    }
+
+    // Go to Home
+    function goHome() {
+      window.location.href = '../index.html'; // Replace with the path to your home page
+    }
+  </script>
+</body>
+</html>
