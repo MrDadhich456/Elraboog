@@ -3,464 +3,134 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quiz Panel</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/pages/quiz/quiz.css">
-
-
+  <title>Quiz Results</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      background-color: #121212;
+      color: white;
+    }
+    .result-container {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #444;
+      border-radius: 10px;
+      background-color: #1e1e1e;
+    }
+    h1 {
+      color: #4CAF50;
+    }
+    .summary {
+      margin: 10px 0;
+    }
+    .button-container {
+      margin-top: 20px;
+    }
+    .button-container button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+    }
+    .retry {
+      background-color: #2196F3;
+      color: white;
+    }
+    .home {
+      background-color: #4CAF50;
+      color: white;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #444;
+      text-align: left;
+    }
+    th {
+      background-color: #333;
+      color: white;
+    }
+    .correct {
+      color: #4CAF50;
+    }
+    .incorrect {
+      color: #F44336;
+    }
+    .unanswered {
+      color: #FFC107;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <header class="header">
-      <img src="/assest/img/logo/Black_And_White_Illustrated_Eagle_Logo__1___1_-removebg 1.png" alt="Logo">
-      <div class="timer" id="timer">TIME: 60:00</div>
-    </header>
-    <main>
-      <div class="quiz-container">
-        <div class="question-image" id="question-image">Image</div>
-        <div class="options" id="options-container"></div>
-        <div class="integer-answer" id="integer-container" style="display: none;">
-          <input type="number" id="integer-input" placeholder="Enter your answer">
-        </div>
-        <div class="navigation-buttons">
-          <button id="previous">Previous</button>
-          <button id="clear-answer">Clear Answer</button>
-          <button id="next">Next</button>
-        </div>
-      </div>
-     
-  <aside class="sidebar" id="sidebar">
-    <button class="toggle-nav-btn" onclick="toggleNavigation()">Show Questions</button>
-    <div class="text">
-      <h3>QUESTIONS</h3>
-    </div>
-    <div class="question-navigation" id="question-navigation"></div>
-    <button id="submit">Submit</button>
-  </aside>
-    </main>
-  </div>
-
-  <!-- Confirmation Modal -->
-  <div id="submit-modal">
-    <div class="modal-content">
-      <h3>Are you sure you want to submit?</h3>
-      <p id="attempted-questions"></p>
-      <p id="unanswered-questions"></p>
-      <p id="total-score"></p>
-      <p id="total-time"></p>
-      <button id="final-submit">Yes, Submit</button>
-      <button id="cancel-submit">Cancel</button>
+  <div class="result-container">
+    <h1>Quiz Results</h1>
+    <p class="summary" id="score"></p>
+    <p class="summary" id="correct"></p>
+    <p class="summary" id="incorrect"></p>
+    <h2>Question Breakdown</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Question No.</th>
+          <!-- <th>Question</th> -->
+          <th>Your Answer</th>
+          <th>Correct Answer</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="breakdown"></tbody>
+    </table>
+    <div class="button-container">
+      <button class="retry" onclick="retryQuiz()">Retry Quiz</button>
+      <button class="home" onclick="goHome()">Go to Home</button>
     </div>
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const questions = [
-        {
-          type: "mcq",
-          image: "/assest/CHEMISTRY/alcohol/1.png",
-          options: ["Option A", "Option B", "Option C", "Option D"],
-          correct: 3
-        },
-        {
-          type: "mcq",
-          image: "/assest/CHEMISTRY/alcohol/2.png",
-          options: ["Option A", "Option B", "Option C", "Option D"],
-          correct: 2
-        },
-        {
-          type: "mcq",
-          image: "/assest/CHEMISTRY/alcohol/3.png",
-          options: ["Option A", "Option B", "Option C", "Option D"],
-          correct: 2
-        },
-        {
-          type: "mcq",
-          image: "/assest/CHEMISTRY/alcohol/4.png",
-          options: ["Option A", "Option B", "Option C", "Option D"],
-          correct: 3
-        },
-        {
-          type: "mcq",
-          image: "/assest/CHEMISTRY/alcohol/5.png",
-          options: ["Option A", "Option B", "Option C", "Option D"],
-          correct: 1
-        },
-        {
-          type: "mcq",
-          image: "/assest/CHEMISTRY/alcohol/6.png",
-          options: ["Option A", "Option B", "Option C", "Option D"],
-          correct: 1
-        },
-        {
-          type: "mcq",
-          image: "/assest/CHEMISTRY/alcohol/7.png",
-          options: ["Option A", "Option B", "Option C", "Option D"],
-          correct: 0
-        },
-        {
-          type: "mcq",
-          image: "/assest/CHEMISTRY/alcohol/8.png",
-          options: ["Option A", "Option B", "Option C", "Option D"],
-          correct: 0
-        },
-        {
-          type: "mcq",
-          image: "/assest/CHEMISTRY/alcohol/9.png",
-          options: ["Option A", "Option B", "Option C", "Option D"],
-          correct: 1
-        },
-        {
-          type: "mcq",
-          image: "/assest/CHEMISTRY/alcohol/10.png",
-          options: ["Option A", "Option B", "Option C", "Option D"],
-          correct: 0
-        },
-        {
-          type: "mcq",
-          image: "/assest/CHEMISTRY/alcohol/11.png",
-          options: ["Option A", "Option B", "Option C", "Option D"],
-          correct: 0
-        },
-        {
-          type: "mcq",
-          image: "/assest/CHEMISTRY/alcohol/12.png",
-          options: ["Option A", "Option B", "Option C", "Option D"],
-          correct: 0
-        },
-        {
-          type: "mcq",
-          image: "/assest/CHEMISTRY/alcohol/13.png",
-          options: ["Option A", "Option B", "Option C", "Option D"],
-          correct: 1
-        },
-        {
-          type: "mcq",
-          image: "/assest/CHEMISTRY/alcohol/14.png",
-          options: ["Option A", "Option B", "Option C", "Option D"],
-          correct: 3
-        },
-        {
-          type: "mcq",
-          image: "/assest/CHEMISTRY/alcohol/15.png",
-          options: ["Option A", "Option B", "Option C", "Option D"],
-          correct: 1
-        },
-        {
-          type: "mcq",
-          image: "/assest/CHEMISTRY/alcohol/16.png",
-          options: ["Option A", "Option B", "Option C", "Option D"],
-          correct: 1
-        },
-        {
-          type: "mcq",
-          image: "/assest/CHEMISTRY/alcohol/17.png",
-          options: ["Option A", "Option B", "Option C", "Option D"],
-          correct: 3
-        },
-        {
-          type: "mcq",
-          image: "/assest/CHEMISTRY/alcohol/18.png",
-          options: ["Option A", "Option B", "Option C", "Option D"],
-          correct: 1
-        },
-        {
-          type: "mcq",
-          image: "/assest/CHEMISTRY/alcohol/19.png",
-          options: ["Option A", "Option B", "Option C", "Option D"],
-          correct: 0
-        },
-        {
-          type: "mcq",
-          image: "/assest/CHEMISTRY/alcohol/20.png",
-          options: ["Option A", "Option B", "Option C", "Option D"],
-          correct: 2
-        },
-       
-        {
-          type: "integer",
-          image: "/assest/CHEMISTRY/alcohol/21.png",
-          correct: 5
-        },
-        {
-          type: "integer",
-          image: "/assest/CHEMISTRY/alcohol/22.png",
-          correct: 5
-        },
-        {
-          type: "integer",
-          image: "/assest/CHEMISTRY/alcohol/23.png",
-          correct: 5
-        },
-        {
-          type: "integer",
-          image: "/assest/CHEMISTRY/alcohol/24.png",
-          correct: 346
-        },
-        {
-          type: "integer",
-          image: "/assest/CHEMISTRY/alcohol/25.png",
-          correct: 25
-        },
-      
-      ];
-      function toggleNavigation() {
-        const sidebar = document.querySelector('.sidebar');
-        const toggleButton = document.querySelector('.toggle-nav-btn');
-        
-        // Toggle the `visible` class on the sidebar
-        sidebar.classList.toggle('visible');
-        
-        // Update button text based on the visibility
-        if (sidebar.classList.contains('visible')) {
-          toggleButton.textContent = 'Hide Questions';
-        } else {
-          toggleButton.textContent = 'Show Questions';
-        }
-      }
-      
-      // Ensure the sidebar is hidden initially on mobile
-      document.addEventListener('DOMContentLoaded', () => {
-        const sidebar = document.querySelector('.sidebar');
-        const toggleButton = document.querySelector('.toggle-nav-btn');
-        
-        if (window.innerWidth <= 768) {
-          sidebar.classList.remove('visible'); // Hide sidebar initially
-          toggleButton.textContent = 'Show Questions'; // Set initial button text
-        }
+    // Retrieve and display results
+    const results = JSON.parse(localStorage.getItem('quizResults'));
+    if (results) {
+      document.getElementById('score').textContent = `Score: ${results.score}`;
+      document.getElementById('correct').textContent = `Total Correct Answers: ${results.correctCount}`;
+      document.getElementById('incorrect').textContent = `Total Incorrect Answers: ${results.incorrectCount}`;
+
+      const breakdown = document.getElementById('breakdown');
+      results.results.forEach((result, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <!-- <td>${result.question}</td> -->
+          <td class="${result.isCorrect ? 'correct' : result.userAnswer === 'Unanswered' ? 'unanswered' : 'incorrect'}">
+            ${result.userAnswer}
+          </td>
+          <td>${result.correctOption}</td>
+          <td class="${result.isCorrect ? 'correct' : result.userAnswer === 'Unanswered' ? 'unanswered' : 'incorrect'}">
+            ${result.isCorrect ? 'Correct' : result.userAnswer === 'Unanswered' ? 'Unanswered' : 'Incorrect'}
+          </td>
+        `;
+        breakdown.appendChild(row);
       });
-      
-      
-      const timerElement = document.getElementById('timer');
-      const questionImage = document.getElementById('question-image');
-      const optionsContainer = document.getElementById('options-container');
-      const integerContainer = document.getElementById('integer-container');
-      const integerInput = document.getElementById('integer-input');
-      const questionNavigation = document.getElementById('question-navigation');
-      const submitModal = document.getElementById('submit-modal');
-      const attemptedQuestionsElement = document.getElementById('attempted-questions');
-      const unansweredQuestionsElement = document.getElementById('unanswered-questions');
-      const totalScoreElement = document.getElementById('total-score');
-      const totalTimeElement = document.getElementById('total-time');
-    
-      let currentQuestionIndex = 0;
-      const userAnswers = new Array(questions.length).fill(null);
-      let timer = 60 * 60; // 60 minutes
-    
-      // Initialize quiz UI
-      function initializeQuiz() {
-        renderQuestion(currentQuestionIndex);
-        renderQuestionNavigation();
-        startTimer();
-      }
-    
-      // Render the question
-      function renderQuestion(index) {
-        const question = questions[index];
-        questionImage.innerHTML = ''; // Clear any existing content
-      
-        // Create an image element for the question
-        const imgElement = document.createElement('img');
-        imgElement.src = question.image; // Set the source to the question's image
-        imgElement.alt = question.question; // Add alt text for accessibility
-        imgElement.style.maxWidth = "100%"; // Adjust image style if needed
-      
-        // Append the image to the question container
-        questionImage.appendChild(imgElement);
-      
-        // Display options or integer input
-        if (question.type === "mcq") {
-          integerContainer.style.display = "none";
-          optionsContainer.style.display = "grid";
-          optionsContainer.innerHTML = "";
-          question.options.forEach((option, i) => {
-            const button = document.createElement('button');
-            button.textContent = option;
-            button.className = 'answer-option';
-            button.addEventListener('click', () => selectAnswer(index, i));
-            if (userAnswers[index] === i) {
-              button.classList.add('selected');
-            }
-            optionsContainer.appendChild(button);
-          });
-        } else if (question.type === "integer") {
-          optionsContainer.style.display = "none";
-          integerContainer.style.display = "block";
-          integerInput.value = userAnswers[index] !== null ? userAnswers[index] : "";
-          integerInput.addEventListener('input', () => selectAnswer(index, parseInt(integerInput.value, 10)));
-        }
-      
-        renderQuestionNavigation(); // Update navigation after rendering the question
-      }
-      
-      
-    
-      // Render question navigation buttons
-// Render question navigation buttons
-function renderQuestionNavigation() {
-  questionNavigation.innerHTML = "";
-  questions.forEach((_, i) => {
-    const button = document.createElement('div');
-    button.textContent = i + 1;
-    button.className = `question-number ${i === currentQuestionIndex ? 'selected' : ''}`;
-    if (userAnswers[i] !== null) {
-      button.classList.add('answered');
+    } else {
+      document.body.innerHTML = "<h1>No results available. Please take the quiz first.</h1>";
     }
-    button.addEventListener('click', () => goToQuestion(i));
-    questionNavigation.appendChild(button);
-  });
-}
 
-    
-      // Select an answer for a question
-      function selectAnswer(index, answer) {
-        userAnswers[index] = answer;
-      
-        // Remove 'selected' class from all options
-        const options = document.querySelectorAll('.options .answer-option');
-        options.forEach(option => option.classList.remove('selected'));
-      
-        // Add 'selected' class to the clicked option
-        options[answer].classList.add('selected');
-      
-        renderQuestionNavigation();
-      }
-      
-    
-      // Navigate to a specific question
-      function goToQuestion(index) {
-        currentQuestionIndex = index;
-        renderQuestion(index);
-      }
-    
-      // Handle Previous and Next buttons
-      document.getElementById('previous').addEventListener('click', () => {
-        if (currentQuestionIndex > 0) {
-          currentQuestionIndex--;
-          renderQuestion(currentQuestionIndex);
-        }
-      });
-    
-      document.getElementById('next').addEventListener('click', () => {
-        if (currentQuestionIndex < questions.length - 1) {
-          currentQuestionIndex++;
-          renderQuestion(currentQuestionIndex);
-        }
-      });
-    
-      // Clear the selected answer for the current question
-      document.getElementById('clear-answer').addEventListener('click', () => {
-        userAnswers[currentQuestionIndex] = null;
-        renderQuestion(currentQuestionIndex);
-        renderQuestionNavigation();
-      });
-    
-      // Submit the quiz
-      document.getElementById('submit').addEventListener('click', () => {
-        const attempted = userAnswers.filter(answer => answer !== null).length;
-        const unanswered = userAnswers.length - attempted;
-        const score = calculateScore();
-    
-        attemptedQuestionsElement.textContent = `Attempted Questions: ${attempted}`;
-        unansweredQuestionsElement.textContent = `Unanswered Questions: ${unanswered}`;
-        totalScoreElement.textContent = `Total Score: ${score}`;
-        totalTimeElement.textContent = `Time Taken: ${formatTime(60 * 60 - timer)}`;
-    
-        submitModal.style.display = 'flex';
-      });
-    
+    // Retry Quiz
+    function retryQuiz() {
+      window.location.href = 'thermoQ1.html'; // Replace with the path to your quiz page
+    }
 
-    
-      // Cancel the submission
-      document.getElementById('cancel-submit').addEventListener('click', () => {
-        submitModal.style.display = 'none';
-      });
-    
-      // Calculate score
-      function calculateScore() {
-        let score = 0;
-        questions.forEach((question, i) => {
-          if (question.type === "mcq" && userAnswers[i] === question.correct) {
-            score++;
-          } else if (question.type === "integer" && userAnswers[i] === question.correct) {
-            score++;
-          }
-        });
-        return score;
-      }
-    
-      // Timer logic
-      function startTimer() {
-        const timerInterval = setInterval(() => {
-          if (timer <= 0) {
-            clearInterval(timerInterval);
-            alert('Time is up! Quiz submitted automatically.');
-            // Auto-submit logic here
-            return;
-          }
-          timer--;
-          timerElement.textContent = `TIME: ${formatTime(timer)}`;
-        }, 1000);
-      }
-    
-      // Format time as MM:SS
-      function formatTime(seconds) {
-        const minutes = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-      }
-      document.getElementById('final-submit').addEventListener('click', () => {
-        console.log("Storing results and redirecting...");
-        
-        const results = questions.map((question, index) => {
-          const userAnswer = userAnswers[index];
-          const isCorrect = userAnswer === question.correct; // Compare with question.correct
-          
-          return {
-            question: question.question,
-            correctOption: question.options ? question.options[question.correct] : question.correct,
-            userAnswer: userAnswer !== null ? (question.options ? question.options[userAnswer] : userAnswer) : "Unanswered",
-            isCorrect,
-          };
-        });
-      
-        let score = 0;
-        const correctCount = results.filter(r => {
-          if (r.isCorrect) {
-            score += 4;  // +4 for correct answer
-            return true;
-          }
-          return false;
-        }).length;
-      
-        const incorrectCount = results.filter(r => r.userAnswer !== "Unanswered" && !r.isCorrect).length;
-      
-        // Subtract 1 for each incorrect answer
-        score -= incorrectCount;
-      
-        // Store results in localStorage
-        localStorage.setItem('quizResults', JSON.stringify({
-          score,
-          correctCount,
-          incorrectCount,
-          totalQuestions: questions.length,
-          results,
-        }));
-      
-        // Log to confirm redirection
-        console.log("Results stored. Now redirecting...");
-      
-        // Redirect to the result page
-        window.location.href = 'rstnlm.html';
-      });
-      
-    
-      
- 
-    
-      // Initialize the quiz
-      initializeQuiz();
-    });
-    
-    
-</script>
+    // Go to Home
+    function goHome() {
+      window.location.href = '../index.html'; // Replace with the path to your home page
+    }
+  </script>
+</body>
+</html>
