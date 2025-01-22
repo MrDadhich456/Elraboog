@@ -1,100 +1,92 @@
-let timeLeft = 60 * 60; // 60 minutes
-let currentQuestionIndex = 0;
-let questions = [
-    { question: "What is 2 + 2?", options: ["2", "3", "4", "5"], answer: 2, type: "mcq" },
-    { question: "Solve for x: 5x = 25", options: [], answer: "5", type: "numerical" }
-];
+document.addEventListener("DOMContentLoaded", function () {
+    console.log("JS Loaded");
 
-// Start timer countdown
-function startTimer() {
-    const timer = document.getElementById("timer");
-    setInterval(() => {
-        if (timeLeft <= 0) {
-            submitTest();
+    const questions = {
+        physics: [
+            { question: "What is the unit of force?", options: ["Newton", "Joule", "Watt", "Pascal"], answer: "Newton" },
+            { question: "Acceleration due to gravity on Earth is?", options: ["9.8 m/s²", "10 m/s²", "5 m/s²", "20 m/s²"], answer: "9.8 m/s²" }
+        ],
+        chemistry: [
+            { question: "What is the chemical formula of water?", options: ["H2O", "CO2", "O2", "H2"], answer: "H2O" }
+        ],
+        math: [
+            { question: "What is the value of π (pi) up to two decimal places?", options: ["3.12", "3.14", "3.16", "3.18"], answer: "3.14" }
+        ]
+    };
+
+    let currentSubject = "physics";
+    let currentQuestionIndex = 0;
+
+    function loadQuestion() {
+        const questionArea = document.getElementById("question-content");
+        const optionsContainer = document.getElementById("options-container");
+        const questionText = document.getElementById("question-text");
+
+        if (!questions[currentSubject] || questions[currentSubject].length === 0) {
+            questionArea.innerHTML = "No questions available.";
             return;
         }
-        let minutes = Math.floor(timeLeft / 60);
-        let seconds = timeLeft % 60;
-        timer.innerText = `Time Left: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-        timeLeft--;
-    }, 1000);
-}
 
-// Load question
-function loadQuestion(index) {
-    let q = questions[index];
-    document.getElementById("question-text").innerText = `Question ${index + 1}:`;
-    document.getElementById("question-content").innerText = q.question;
-    
-    const optionsContainer = document.getElementById("options-container");
-    const numericalContainer = document.getElementById("numerical-container");
-    optionsContainer.innerHTML = "";
+        const currentQuestion = questions[currentSubject][currentQuestionIndex];
+        questionText.innerHTML = `Question ${currentQuestionIndex + 1}:`;
+        questionArea.innerHTML = currentQuestion.question;
 
-    if (q.type === "mcq") {
-        q.options.forEach((opt, i) => {
-            let btn = document.createElement("button");
-            btn.innerText = opt;
-            btn.onclick = () => selectAnswer(index, i);
+        optionsContainer.innerHTML = "";
+        currentQuestion.options.forEach((option, index) => {
+            const btn = document.createElement("button");
+            btn.classList.add("option-btn");
+            btn.innerText = option;
+            btn.onclick = () => selectAnswer(option);
             optionsContainer.appendChild(btn);
         });
-        numericalContainer.style.display = "none";
-    } else {
-        numericalContainer.style.display = "block";
+
+        updateQuestionPalette();
     }
-}
 
-// Mark as answered
-function selectAnswer(qIndex, option) {
-    document.querySelectorAll(".question-palette button")[qIndex].classList.add("answered");
-}
+    function updateQuestionPalette() {
+        const palette = document.getElementById("question-palette");
+        palette.innerHTML = "";
 
-// Mark for review
-function markForReview() {
-    document.querySelectorAll(".question-palette button")[currentQuestionIndex].classList.add("review");
-}
-
-// Clear Response
-function clearResponse() {
-    document.querySelectorAll(".question-palette button")[currentQuestionIndex].classList.remove("answered", "review");
-}
-
-// Load next question
-function nextQuestion() {
-    if (currentQuestionIndex < questions.length - 1) {
-        currentQuestionIndex++;
-        loadQuestion(currentQuestionIndex);
+        questions[currentSubject].forEach((_, index) => {
+            const btn = document.createElement("button");
+            btn.classList.add("question-btn");
+            btn.innerText = index + 1;
+            btn.onclick = () => goToQuestion(index);
+            if (index === currentQuestionIndex) {
+                btn.classList.add("active-question");
+            }
+            palette.appendChild(btn);
+        });
     }
-}
 
-// Generate question palette
-function generatePalette() {
-    let palette = document.getElementById("question-palette");
-    palette.innerHTML = "";
-    for (let i = 0; i < questions.length; i++) {
-        let btn = document.createElement("button");
-        btn.innerText = i + 1;
-        btn.onclick = () => {
-            currentQuestionIndex = i;
-            loadQuestion(i);
-        };
-        palette.appendChild(btn);
+    function goToQuestion(index) {
+        currentQuestionIndex = index;
+        loadQuestion();
     }
-}
 
-// Submit test
-function submitTest() {
-    alert("Test submitted!");
-}
+    function changeSubject(subject) {
+        console.log("Switching to:", subject);
+        currentSubject = subject;
+        currentQuestionIndex = 0;
+        loadQuestion();
+    }
 
-// Change subject
-function changeSubject(subject) {
-    document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
-    document.querySelector(`[onclick="changeSubject('${subject}')"]`).classList.add("active");
-}
+    function nextQuestion() {
+        if (currentQuestionIndex < questions[currentSubject].length - 1) {
+            currentQuestionIndex++;
+            loadQuestion();
+        } else {
+            alert("No more questions in this subject.");
+        }
+    }
 
-// Initialize
-document.addEventListener("DOMContentLoaded", () => {
-    startTimer();
-    generatePalette();
-    loadQuestion(0);
+    function selectAnswer(answer) {
+        console.log("Selected Answer:", answer);
+        alert(`You selected: ${answer}`);
+    }
+
+    loadQuestion();
+
+    window.changeSubject = changeSubject;
+    window.nextQuestion = nextQuestion;
 });

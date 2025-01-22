@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="mock.css">
 </head>
 <body>
+
+    <!-- Header Section -->
     <header class="header">
         <div class="logo">NATIONAL TESTING AGENCY</div>
         <div class="timer" id="timer">Time Left: 60:00</div>
@@ -15,24 +17,33 @@
     <div class="container">
         <!-- Subject Tabs -->
         <div class="subject-tabs">
-            <button class="tab active" onclick="changeSubject('physics')">Physics</button>
-            <button class="tab" onclick="changeSubject('chemistry')">Chemistry</button>
-            <button class="tab" onclick="changeSubject('math')">Mathematics</button>
+            <button class="tab active" onclick="changeSubject('physics')" id="physics-tab">Physics</button>
+            <button class="tab" onclick="changeSubject('chemistry')" id="chemistry-tab">Chemistry</button>
+            <button class="tab" onclick="changeSubject('math')" id="math-tab">Mathematics</button>
         </div>
 
         <!-- Main Quiz Section -->
         <div class="quiz-container">
             <div class="question-area">
                 <h3 id="question-text">Question 1:</h3>
+                <div id="question-image-container" style="display: none;">
+                    <img id="question-image" src="" alt="Question Image">
+                </div>
                 <p id="question-content">Loading question...</p>
+
+                <!-- Options -->
                 <div class="options-container" id="options-container"></div>
+
+                <!-- Numerical Answer Input -->
                 <div class="numerical-answer" id="numerical-container" style="display: none;">
                     <input type="number" id="integer-input" placeholder="Enter your answer">
                 </div>
+
+                <!-- Navigation Buttons -->
                 <div class="buttons">
-                    <button onclick="markForReview()">Mark for Review</button>
-                    <button onclick="clearResponse()">Clear Response</button>
-                    <button onclick="nextQuestion()">Save & Next</button>
+                    <button onclick="markForReview()" aria-label="Mark for Review">Mark for Review</button>
+                    <button onclick="clearResponse()" aria-label="Clear Response">Clear Response</button>
+                    <button onclick="nextQuestion()" aria-label="Save and Next">Save & Next</button>
                 </div>
             </div>
 

@@ -1,7 +1,7 @@
 body {
-    font-family: Arial, sans-serif;
     background-color: #0D1117;
     color: white;
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -10,33 +10,32 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #20232a;
+    background: #161b22;
     padding: 15px 20px;
-    font-size: 18px;
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
+.timer {
+    background: #E91E63;
+    padding: 5px 15px;
+    border-radius: 5px;
 }
 
 .subject-tabs {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    margin-top: 15px;
 }
 
 .tab {
     padding: 10px 20px;
-    background: #444;
-    border: none;
+    background: #222;
     color: white;
+    border-radius: 5px;
     cursor: pointer;
 }
 
 .tab.active {
-    background: #f39c12;
+    background: #E91E63;
 }
 
 .quiz-container {
@@ -51,17 +50,20 @@ body {
     border-radius: 8px;
 }
 
-.options-container {
-    margin-top: 10px;
+.options-container button {
+    display: block;
+    width: 100%;
+    margin: 5px 0;
+    padding: 10px;
+    border: none;
+    background: #222;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-button {
-    background: #f39c12;
-    border: none;
-    padding: 10px;
-    color: white;
-    margin-top: 10px;
-    cursor: pointer;
+.options-container button:hover {
+    background: #E91E63;
 }
 
 .sidebar {
@@ -81,20 +83,45 @@ button {
 .question-palette button {
     width: 40px;
     height: 40px;
-    background: #444;
-    border: none;
+    background: #222;
+    border-radius: 5px;
     color: white;
+    cursor: pointer;
 }
 
 .question-palette button.answered {
-    background: #28a745;
-}
-
-.question-palette button.review {
-    background: #ffc107;
+    background: #4CAF50;
 }
 
 .submit-btn {
     width: 100%;
     background: red;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.question-palette {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.question-btn {
+    padding: 10px;
+    border: 1px solid #fff;
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.question-btn:hover {
+    background-color: #007BFF;
+}
+
+.active-question {
+    background-color: #28a745;
+    color: white;
 }
