@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JEE Mains Mock Test</title>
+    <link rel="stylesheet" href="mock.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">NATIONAL TESTING AGENCY</div>
+        <div class="timer" id="timer">Time Left: 60:00</div>
+    </header>
+
+    <div class="container">
+        <!-- Subject Tabs -->
+        <div class="subject-tabs">
+            <button class="tab active" onclick="changeSubject('physics')">Physics</button>
+            <button class="tab" onclick="changeSubject('chemistry')">Chemistry</button>
+            <button class="tab" onclick="changeSubject('math')">Mathematics</button>
+        </div>
+
+        <!-- Main Quiz Section -->
+        <div class="quiz-container">
+            <div class="question-area">
+                <h3 id="question-text">Question 1:</h3>
+                <p id="question-content">Loading question...</p>
+                <div class="options-container" id="options-container"></div>
+                <div class="numerical-answer" id="numerical-container" style="display: none;">
+                    <input type="number" id="integer-input" placeholder="Enter your answer">
+                </div>
+                <div class="buttons">
+                    <button onclick="markForReview()">Mark for Review</button>
+                    <button onclick="clearResponse()">Clear Response</button>
+                    <button onclick="nextQuestion()">Save & Next</button>
+                </div>
+            </div>
+
+            <!-- Sidebar with Question Palette -->
+            <aside class="sidebar">
+                <h3>Questions</h3>
+                <div class="question-palette" id="question-palette"></div>
+                <button class="submit-btn" onclick="submitTest()">Submit Test</button>
+            </aside>
+        </div>
+    </div>
+
+    <script src="mock.js"></script>
+</body>
+</html>
