@@ -1,6 +1,29 @@
 document.addEventListener("DOMContentLoaded", function () {
     console.log("JS Loaded");
 
+    // 3 Hours Timer (180 minutes = 10800 seconds)
+    let totalTime = 180 * 60; // 3 hours in seconds
+    const timerElement = document.getElementById("timer");
+
+    function updateTimer() {
+        const hours = Math.floor(totalTime / 3600);
+        const minutes = Math.floor((totalTime % 3600) / 60);
+        const seconds = totalTime % 60;
+
+        timerElement.innerHTML = `Time Left: ${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+        if (totalTime > 0) {
+            totalTime--;
+            setTimeout(updateTimer, 1000);
+        } else {
+            alert("Time's up! Submitting the test automatically.");
+            submitTest();
+        }
+    }
+
+    updateTimer(); // Start the timer
+
+    // Questions Database
     const questions = {
         physics: [
             { question: "What is the unit of force?", options: ["Newton", "Joule", "Watt", "Pascal"], answer: "Newton" },
@@ -16,6 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let currentSubject = "physics";
     let currentQuestionIndex = 0;
+    let userAnswers = {};
 
     function loadQuestion() {
         const questionArea = document.getElementById("question-content");
@@ -55,6 +79,9 @@ document.addEventListener("DOMContentLoaded", function () {
             if (index === currentQuestionIndex) {
                 btn.classList.add("active-question");
             }
+            if (userAnswers[`${currentSubject}-${index}`]) {
+                btn.classList.add("answered"); // Mark answered questions
+            }
             palette.appendChild(btn);
         });
     }
@@ -82,11 +109,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function selectAnswer(answer) {
         console.log("Selected Answer:", answer);
-        alert(`You selected: ${answer}`);
+        userAnswers[`${currentSubject}-${currentQuestionIndex}`] = answer;
+        updateQuestionPalette();
     }
 
-    loadQuestion();
+    function submitTest() {
+        localStorage.setItem("userAnswers", JSON.stringify(userAnswers));
+        window.location.href = "result.html"; // Redirect to result page
+    }
 
     window.changeSubject = changeSubject;
     window.nextQuestion = nextQuestion;
+    window.submitTest = submitTest;
+
+    loadQuestion(); // Load first question
 });
