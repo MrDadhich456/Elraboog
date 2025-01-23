@@ -185,7 +185,8 @@ body {
   .card {
     width: 320px;
     height: 400px;
-    background: linear-gradient(135deg, #f8f9fa, #e0e6ed); /* Subtle gradient for a premium feel */
+    /* background: linear-gradient(135deg, #f8f9fa, #e0e6ed); Subtle gradient for a premium feel */
+    background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); /* Softer shadow for elegance */
     transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease; /* Smooth transition effects */
@@ -201,7 +202,7 @@ body {
     background: linear-gradient(135deg, #e8f0f7, #cfd6e3); /* Subtle color shift on hover */
 }
   .card-image {
-   
+    margin-top: 10px;
     width: 270px;
     height: 270px; /*Adjust as needed */
     object-fit:fill; /* Ensures the image fits properly */
