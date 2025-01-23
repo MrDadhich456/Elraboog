@@ -1,41 +1,58 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const resultList = document.getElementById('result-list');
-    const totalAttempted = document.getElementById('total-attempted');
-    const totalCorrect = document.getElementById('total-correct');
-    const totalIncorrect = document.getElementById('total-incorrect');
+    const userResponses = JSON.parse(localStorage.getItem("userResponses")) || {};
+    const questions = JSON.parse(localStorage.getItem("questions")) || {};
+    let totalScore = 0;
+    let attempted = 0;
+    let correct = 0;
+    let incorrect = 0;
+    let unattempted = 0;
     
-    // Sample data structure for results
-    // Store this object when the quiz ends, here it's just a sample
-    const quizResults = {
-        attempted: [
-            { question: "What is the unit of force?", userAnswer: "Newton", correctAnswer: "Newton" },
-            { question: "What is the chemical formula of water?", userAnswer: "CO2", correctAnswer: "H2O" },
-            { question: "What is the value of π?", userAnswer: "3.14", correctAnswer: "3.14" }
-        ]
-    };
+    const resultSummary = document.getElementById("result-summary");
+    const detailedResults = document.getElementById("detailed-results");
 
-    let correctCount = 0;
-    let incorrectCount = 0;
+    function calculateResults() {
+        Object.keys(questions).forEach(subject => {
+            questions[subject].forEach((q, index) => {
+                const userAnswer = userResponses[subject]?.[index] || null;
+                const isCorrect = userAnswer === q.answer;
 
-    quizResults.attempted.forEach((attempt, index) => {
-        const listItem = document.createElement('li');
-        listItem.innerHTML = `<strong>Question ${index + 1}: </strong> 
-            ${attempt.question}<br> 
-            <strong>Your Answer:</strong> ${attempt.userAnswer} 
-            <br><strong>Correct Answer:</strong> ${attempt.correctAnswer}`;
+                if (userAnswer) {
+                    attempted++;
+                    if (isCorrect) {
+                        correct++;
+                        totalScore += 4;  // +4 for correct
+                    } else {
+                        incorrect++;
+                        totalScore -= 1;  // -1 for incorrect
+                    }
+                } else {
+                    unattempted++;
+                }
 
-        resultList.appendChild(listItem);
+                detailedResults.innerHTML += `
+                    <div class="result-item">
+                        <p><strong>${subject.toUpperCase()} Q${index + 1}:</strong> ${q.question}</p>
+                        <p>Your Answer: ${userAnswer || "Not Attempted"}</p>
+                        <p>Correct Answer: ${q.answer}</p>
+                        <hr>
+                    </div>
+                `;
+            });
+        });
 
-        // Count correct and incorrect answers
-        if (attempt.userAnswer === attempt.correctAnswer) {
-            correctCount++;
-        } else {
-            incorrectCount++;
-        }
-    });
+        resultSummary.innerHTML = `
+            <p>Total Questions: 90</p>
+            <p>Attempted: ${attempted}</p>
+            <p>Correct: ${correct}</p>
+            <p>Incorrect: ${incorrect}</p>
+            <p>Unattempted: ${unattempted}</p>
+            <p><strong>Total Score: ${totalScore} / 300</strong></p>
+        `;
+    }
 
-    // Update total counts
-    totalAttempted.innerHTML = `Total Attempted Questions: ${quizResults.attempted.length}`;
-    totalCorrect.innerHTML = `Total Correct Answers: ${correctCount}`;
-    totalIncorrect.innerHTML = `Total Incorrect Answers: ${incorrectCount}`;
+    calculateResults();
 });
+
+function goToHome() {
+    window.location.href = "index.html";
+}
