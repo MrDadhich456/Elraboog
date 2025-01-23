@@ -52,6 +52,7 @@ body {
     cursor: pointer;
     margin: 0 5px;
     transition: 0.3s;
+    border-radius: 5px;
 }
 
 .tab.active {
@@ -205,6 +206,55 @@ body {
 .result-item hr {
     border: 0.5px solid #555;
 }
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #666;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #333;
+}
+
+td {
+    background-color: #222;
+}
+
+/* Charts */
+/* Charts Section */
+.charts {
+    text-align: center;
+    padding: 20px;
+}
+
+/* Styling for Charts (Bar & Pie) */
+canvas {
+    max-width: 450px;  /* Increased size */
+    max-height: 350px;
+    display: block;
+    margin: 20px auto;
+    border: 2px solid #444; /* Dark border */
+    border-radius: 8px;
+    background: #1e1e1e; /* Dark theme */
+    padding: 10px;
+}
+
+/* Ensure Chart Area Stays Responsive */
+@media (max-width: 768px) {
+    canvas {
+        max-width: 350px;
+        max-height: 300px;
+    }
+}
+
 
 /* Home Button */
 button {

@@ -1,58 +1,106 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const userResponses = JSON.parse(localStorage.getItem("userResponses")) || {};
-    const questions = JSON.parse(localStorage.getItem("questions")) || {};
-    let totalScore = 0;
-    let attempted = 0;
-    let correct = 0;
-    let incorrect = 0;
-    let unattempted = 0;
-    
-    const resultSummary = document.getElementById("result-summary");
-    const detailedResults = document.getElementById("detailed-results");
+    const userAnswers = JSON.parse(localStorage.getItem("userAnswers")) || {};
 
-    function calculateResults() {
-        Object.keys(questions).forEach(subject => {
-            questions[subject].forEach((q, index) => {
-                const userAnswer = userResponses[subject]?.[index] || null;
-                const isCorrect = userAnswer === q.answer;
+    const correctAnswers = {
+        physics: [
+            { question: "What is the unit of force?", answer: "Newton" },
+            { question: "Acceleration due to gravity on Earth is?", answer: "9.8 m/s²" }
+        ],
+        chemistry: [
+            { question: "What is the chemical formula of water?", answer: "H2O" }
+        ],
+        math: [
+            { question: "What is the value of π (pi) up to two decimal places?", answer: "3.14" }
+        ]
+    };
 
-                if (userAnswer) {
-                    attempted++;
-                    if (isCorrect) {
-                        correct++;
-                        totalScore += 4;  // +4 for correct
-                    } else {
-                        incorrect++;
-                        totalScore -= 1;  // -1 for incorrect
-                    }
+    let totalMarks = 0, totalAttempted = 0, correct = 0, incorrect = 0, unattempted = 0;
+
+    let subjectAnalysis = {
+        physics: { correct: 0, incorrect: 0, unattempted: 0, score: 0 },
+        chemistry: { correct: 0, incorrect: 0, unattempted: 0, score: 0 },
+        math: { correct: 0, incorrect: 0, unattempted: 0, score: 0 }
+    };
+
+    Object.keys(correctAnswers).forEach(subject => {
+        correctAnswers[subject].forEach((q, index) => {
+            let key = `${subject}-${index}`;
+            if (userAnswers[key]) {
+                totalAttempted++;
+                if (userAnswers[key] === q.answer) {
+                    correct++;
+                    totalMarks += 4;
+                    subjectAnalysis[subject].correct++;
+                    subjectAnalysis[subject].score += 4;
                 } else {
-                    unattempted++;
+                    incorrect++;
+                    totalMarks -= 1;
+                    subjectAnalysis[subject].incorrect++;
+                    subjectAnalysis[subject].score -= 1;
                 }
-
-                detailedResults.innerHTML += `
-                    <div class="result-item">
-                        <p><strong>${subject.toUpperCase()} Q${index + 1}:</strong> ${q.question}</p>
-                        <p>Your Answer: ${userAnswer || "Not Attempted"}</p>
-                        <p>Correct Answer: ${q.answer}</p>
-                        <hr>
-                    </div>
-                `;
-            });
+            } else {
+                unattempted++;
+                subjectAnalysis[subject].unattempted++;
+            }
         });
+    });
 
-        resultSummary.innerHTML = `
-            <p>Total Questions: 90</p>
-            <p>Attempted: ${attempted}</p>
-            <p>Correct: ${correct}</p>
-            <p>Incorrect: ${incorrect}</p>
-            <p>Unattempted: ${unattempted}</p>
-            <p><strong>Total Score: ${totalScore} / 300</strong></p>
-        `;
-    }
+    document.getElementById("total-marks").innerText = totalMarks;
+    document.getElementById("total-attempted").innerText = totalAttempted;
+    document.getElementById("correct-answers").innerText = correct;
+    document.getElementById("incorrect-answers").innerText = incorrect;
+    document.getElementById("unattempted-questions").innerText = unattempted;
 
-    calculateResults();
+    document.getElementById("physics-correct").innerText = subjectAnalysis.physics.correct;
+    document.getElementById("physics-incorrect").innerText = subjectAnalysis.physics.incorrect;
+    document.getElementById("physics-unattempted").innerText = subjectAnalysis.physics.unattempted;
+    document.getElementById("physics-score").innerText = subjectAnalysis.physics.score;
+
+    document.getElementById("chemistry-correct").innerText = subjectAnalysis.chemistry.correct;
+    document.getElementById("chemistry-incorrect").innerText = subjectAnalysis.chemistry.incorrect;
+    document.getElementById("chemistry-unattempted").innerText = subjectAnalysis.chemistry.unattempted;
+    document.getElementById("chemistry-score").innerText = subjectAnalysis.chemistry.score;
+
+    document.getElementById("math-correct").innerText = subjectAnalysis.math.correct;
+    document.getElementById("math-incorrect").innerText = subjectAnalysis.math.incorrect;
+    document.getElementById("math-unattempted").innerText = subjectAnalysis.math.unattempted;
+    document.getElementById("math-score").innerText = subjectAnalysis.math.score;
+
+    // ** Bar Chart (Subject Performance) **
+    new Chart(document.getElementById("performanceChart"), {
+        type: "bar",
+        data: {
+            labels: ["Physics", "Chemistry", "Mathematics"],
+            datasets: [
+                {
+                    label: "Correct",
+                    data: [subjectAnalysis.physics.correct, subjectAnalysis.chemistry.correct, subjectAnalysis.math.correct],
+                    backgroundColor: "green"
+                },
+                {
+                    label: "Incorrect",
+                    data: [subjectAnalysis.physics.incorrect, subjectAnalysis.chemistry.incorrect, subjectAnalysis.math.incorrect],
+                    backgroundColor: "red"
+                },
+                {
+                    label: "Unattempted",
+                    data: [subjectAnalysis.physics.unattempted, subjectAnalysis.chemistry.unattempted, subjectAnalysis.math.unattempted],
+                    backgroundColor: "gray"
+                }
+            ]
+        },
+        options: { responsive: true }
+    });
+
+    // ** Pie Chart (Overall Attempted) **
+    new Chart(document.getElementById("attemptChart"), {
+        type: "pie",
+        data: {
+            labels: ["Correct", "Incorrect", "Unattempted"],
+            datasets: [{
+                data: [correct, incorrect, unattempted],
+                backgroundColor: ["green", "red", "gray"]
+            }]
+        }
+    });
 });
-
-function goToHome() {
-    window.location.href = "index.html";
-}

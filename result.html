@@ -3,23 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JEE Mock Test Result</title>
+    <title>Mock Test Results</title>
     <link rel="stylesheet" href="mock.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Chart.js -->
 </head>
 <body>
+
     <header class="header">
         <div class="logo">NATIONAL TESTING AGENCY</div>
-        <div class="timer">Test Completed</div>
+        <h1>Mock Test Result</h1>
     </header>
 
     <div class="container">
-        <h2>Test Results</h2>
-        <div id="result-summary">
-          
+        <div class="summary">
+            <h2>Test Summary</h2>
+            <table>
+                <tr>
+                    <th>Total Marks</th>
+                    <td id="total-marks">Loading...</td>
+                </tr>
+                <tr>
+                    <th>Total Attempted</th>
+                    <td id="total-attempted">Loading...</td>
+                </tr>
+                <tr>
+                    <th>Correct Answers</th>
+                    <td id="correct-answers">Loading...</td>
+                </tr>
+                <tr>
+                    <th>Incorrect Answers</th>
+                    <td id="incorrect-answers">Loading...</td>
+                </tr>
+                <tr>
+                    <th>Unattempted Questions</th>
+                    <td id="unattempted-questions">Loading...</td>
+                </tr>
+            </table>
         </div>
-        <h3>Question-wise Analysis</h3>
-        <div id="detailed-results"></div>
-        <button onclick="goToHome()">Go to Home</button>
+
+        <div class="subject-analysis">
+            <h2>Subject-wise Performance</h2>
+            <table>
+                <tr>
+                    <th>Subject</th>
+                    <th>Correct</th>
+                    <th>Incorrect</th>
+                    <th>Unattempted</th>
+                    <th>Score</th>
+                </tr>
+                <tr>
+                    <td>Physics</td>
+                    <td id="physics-correct">0</td>
+                    <td id="physics-incorrect">0</td>
+                    <td id="physics-unattempted">0</td>
+                    <td id="physics-score">0</td>
+                </tr>
+                <tr>
+                    <td>Chemistry</td>
+                    <td id="chemistry-correct">0</td>
+                    <td id="chemistry-incorrect">0</td>
+                    <td id="chemistry-unattempted">0</td>
+                    <td id="chemistry-score">0</td>
+                </tr>
+                <tr>
+                    <td>Mathematics</td>
+                    <td id="math-correct">0</td>
+                    <td id="math-incorrect">0</td>
+                    <td id="math-unattempted">0</td>
+                    <td id="math-score">0</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="charts">
+            <h2>Graphical Performance Analysis</h2>
+            <canvas id="performanceChart"></canvas>
+            <canvas id="attemptChart"></canvas>
+        </div>
+
     </div>
 
     <script src="result.js"></script>
