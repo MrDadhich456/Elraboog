@@ -123,6 +123,7 @@ body {
   color: #ffffff; /* Text color */
   padding: 0px 20px; /* Adjust padding for better spacing */
   text-align: left; /* Aligns text to the left */
+  
 }
 
 .hero h1 {
@@ -329,6 +330,7 @@ body {
 
 .evaluation-content {
   max-width: 50%; /* Restrict content width */
+  
 }
 
 .evaluation-content h2 {
@@ -343,6 +345,7 @@ body {
   font-weight: 400;
   font-size: 18px;
   margin-bottom: 20px;
+  
 }
 
 /* Buttons */
