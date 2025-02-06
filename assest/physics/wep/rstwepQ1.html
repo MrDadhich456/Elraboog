@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Results</title>
+  <link rel="stylesheet" href="/pages/quiz/quiz.css">
+</head>
+<body>
+  <div class="result-container">
+    <h1>Quiz Results</h1>
+    <p class="summary" id="score"></p>
+    <p class="summary" id="correct"></p>
+    <p class="summary" id="incorrect"></p>
+    <h2>Question Breakdown</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Question No.</th>
+          <!-- <th>Question</th> -->
+          <th>Your Answer</th>
+          <th>Correct Answer</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="breakdown"></tbody>
+    </table>
+    <div class="button-container">
+      <button class="retry" onclick="retryQuiz()">Retry Quiz</button>
+      <button class="home" onclick="goHome()">Go to Home</button>
+    </div>
+  </div>
+
+  <script>
+    // Retrieve and display results
+    const results = JSON.parse(localStorage.getItem('quizResults'));
+    if (results) {
+      document.getElementById('score').textContent = `Score: ${results.score}`;
+      document.getElementById('correct').textContent = `Total Correct Answers: ${results.correctCount}`;
+      document.getElementById('incorrect').textContent = `Total Incorrect Answers: ${results.incorrectCount}`;
+
+      const breakdown = document.getElementById('breakdown');
+      results.results.forEach((result, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <!-- <td>${result.question}</td> -->
+          <td class="${result.isCorrect ? 'correct' : result.userAnswer === 'Unanswered' ? 'unanswered' : 'incorrect'}">
+            ${result.userAnswer}
+          </td>
+          <td>${result.correctOption}</td>
+          <td class="${result.isCorrect ? 'correct' : result.userAnswer === 'Unanswered' ? 'unanswered' : 'incorrect'}">
+            ${result.isCorrect ? 'Correct' : result.userAnswer === 'Unanswered' ? 'Unanswered' : 'Incorrect'}
+          </td>
+        `;
+        breakdown.appendChild(row);
+      });
+    } else {
+      document.body.innerHTML = "<h1>No results available. Please take the quiz first.</h1>";
+    }
+
+    // Retry Quiz
+    function retryQuiz() {
+      window.location.href = 'quiz.html'; // Replace with the path to your quiz page
+    }
+
+    // Go to Home
+    function goHome() {
+      window.location.href = '../index.html'; // Replace with the path to your home page
+    }
+  </script>
+</body>
+</html>
