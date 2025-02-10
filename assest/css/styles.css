@@ -69,7 +69,9 @@ body {
     cursor: pointer;
     transition: color 0.3s;
   }
-  
+  .sidebar-icon {
+    color: #E5E5E5; /* Replace #000 with your desired color */
+  }
   .sidebar nav ul li:hover {
     color: #ffffff;
   }
@@ -330,7 +332,6 @@ body {
 
 .evaluation-content {
   max-width: 50%; /* Restrict content width */
-  
 }
 
 .evaluation-content h2 {
@@ -345,10 +346,16 @@ body {
   font-weight: 400;
   font-size: 18px;
   margin-bottom: 20px;
-  
+  margin-left: 0px; /* Slight lift for better alignment with h2 */
 }
 
 /* Buttons */
+.evaluation-buttons {
+  display: flex;
+  flex-wrap: wrap; /* Ensure buttons wrap on smaller screens */
+  gap: 10px; /* Space between buttons */
+}
+
 .evaluation-buttons button {
   background-color: #ffffff;
   color: #0D1117;
@@ -356,7 +363,6 @@ body {
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
   padding: 10px 20px;
-  margin-right: 10px;
   border-radius: 5px;
   cursor: pointer;
   transition: transform 0.2s ease, background-color 0.2s ease;
@@ -383,6 +389,7 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
 /* Responsive Design for Smaller Screens */
 @media (max-width: 768px) {
   .evaluation-section {
@@ -394,7 +401,9 @@ body {
   .evaluation-content, .evaluation-image {
     max-width: 100%; /* Full width */
   }
-
+  .evaluation-buttons {
+    justify-content: center; /* Center buttons horizontally */
+  }
   .image-placeholder {
     margin-top: 20px; /* Add spacing between content and image */
   }
@@ -411,6 +420,12 @@ body {
 
   .evaluation-content h3 {
     font-size: 16px;
+  }
+  .evaluation-buttons {
+    justify-content: center; /* Center buttons horizontally */
+  }
+  .evaluation-buttons button {
+    padding: 12px 24px; /* Increase padding for better touch targets */
   }
 }
 /* Footer Styles */
