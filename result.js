@@ -89,18 +89,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             ]
         },
-        options: { responsive: true }
-    });
-
-    // ** Pie Chart (Overall Attempted) **
-    new Chart(document.getElementById("attemptChart"), {
-        type: "pie",
-        data: {
-            labels: ["Correct", "Incorrect", "Unattempted"],
-            datasets: [{
-                data: [correct, incorrect, unattempted],
-                backgroundColor: ["green", "red", "gray"]
-            }]
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Subjects'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Number of Questions'
+                    }
+                }
+            }
         }
     });
 });

@@ -243,12 +243,16 @@ td {
 .charts {
     text-align: center;
     padding: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    margin-top: 20px;
 }
 
 /* Styling for Charts (Bar & Pie) */
 canvas {
-    max-width: 450px;  /* Increased size */
-    max-height: 350px;
+    max-width: 800px;  /* Increased size */
+    max-height: 600px;
     display: block;
     margin: 20px auto;
     border: 2px solid #444; /* Dark border */
@@ -260,8 +264,8 @@ canvas {
 /* Ensure Chart Area Stays Responsive */
 @media (max-width: 768px) {
     canvas {
-        max-width: 350px;
-        max-height: 300px;
+        max-width: 600px;
+        max-height: 400px;
     }
 }
 
