@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentSubject = "physics";
     let currentQuestionIndex = 0;
     let userAnswers = {};
+    let markedForReview = {};
 
     function loadQuestion() {
         const questionArea = document.getElementById("question-content");
@@ -60,8 +61,13 @@ document.addEventListener("DOMContentLoaded", function () {
             const btn = document.createElement("button");
             btn.classList.add("option-btn");
             btn.innerText = option;
-            btn.onclick = () => selectAnswer(option);
+            btn.onclick = () => selectAnswer(option, btn);
             optionsContainer.appendChild(btn);
+
+            // Highlight selected option if already answered
+            if (userAnswers[`${currentSubject}-${currentQuestionIndex}`] === option) {
+                btn.classList.add("selected");
+            }
         });
 
         updateQuestionPalette();
@@ -82,6 +88,9 @@ document.addEventListener("DOMContentLoaded", function () {
             if (userAnswers[`${currentSubject}-${index}`]) {
                 btn.classList.add("answered"); // Mark answered questions
             }
+            if (markedForReview[`${currentSubject}-${index}`]) {
+                btn.classList.add("marked-for-review"); // Mark questions for review
+            }
             palette.appendChild(btn);
         });
     }
@@ -96,6 +105,13 @@ document.addEventListener("DOMContentLoaded", function () {
         currentSubject = subject;
         currentQuestionIndex = 0;
         loadQuestion();
+
+        // Update active tab
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.classList.remove('active');
+        });
+        document.getElementById(`${subject}-tab`).classList.add('active');
     }
 
     function nextQuestion() {
@@ -107,10 +123,86 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function selectAnswer(answer) {
+    function selectAnswer(answer, btn) {
         console.log("Selected Answer:", answer);
         userAnswers[`${currentSubject}-${currentQuestionIndex}`] = answer;
+
+        // Update selected option
+        const options = document.querySelectorAll('.option-btn');
+        options.forEach(option => {
+            option.classList.remove('selected');
+        });
+        btn.classList.add('selected');
+
         updateQuestionPalette();
+    }
+
+    function markForReview() {
+        markedForReview[`${currentSubject}-${currentQuestionIndex}`] = true;
+        updateQuestionPalette();
+    }
+
+    function clearResponse() {
+        delete userAnswers[`${currentSubject}-${currentQuestionIndex}`];
+        updateQuestionPalette();
+        loadQuestion();
+    }
+
+    function showSummary() {
+        const summaryModal = document.getElementById("summary-modal");
+        const summaryContent = document.getElementById("summary-content");
+
+        let summaryHTML = `
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Total Attempted</th>
+                        <th>Total Not Attempted</th>
+                        <th>Total Marked for Review</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        Object.keys(questions).forEach(subject => {
+            let totalAttempted = 0;
+            let totalNotAttempted = 0;
+            let totalMarkedForReview = 0;
+
+            questions[subject].forEach((_, index) => {
+                if (userAnswers[`${subject}-${index}`]) {
+                    totalAttempted++;
+                } else {
+                    totalNotAttempted++;
+                }
+                if (markedForReview[`${subject}-${index}`]) {
+                    totalMarkedForReview++;
+                }
+            });
+
+            summaryHTML += `
+                <tr>
+                    <td>${subject.charAt(0).toUpperCase() + subject.slice(1)}</td>
+                    <td>${totalAttempted}</td>
+                    <td>${totalNotAttempted}</td>
+                    <td>${totalMarkedForReview}</td>
+                </tr>
+            `;
+        });
+
+        summaryHTML += `
+                </tbody>
+            </table>
+        `;
+
+        summaryContent.innerHTML = summaryHTML;
+        summaryModal.style.display = "block";
+    }
+
+    function closeSummary() {
+        const summaryModal = document.getElementById("summary-modal");
+        summaryModal.style.display = "none";
     }
 
     function submitTest() {
@@ -121,6 +213,10 @@ document.addEventListener("DOMContentLoaded", function () {
     window.changeSubject = changeSubject;
     window.nextQuestion = nextQuestion;
     window.submitTest = submitTest;
+    window.showSummary = showSummary;
+    window.closeSummary = closeSummary;
+    window.markForReview = markForReview;
+    window.clearResponse = clearResponse;
 
     loadQuestion(); // Load first question
 });
