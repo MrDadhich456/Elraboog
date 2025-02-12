@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentQuestionIndex = 0;
     let userAnswers = {};
     let markedForReview = {};
+    let viewedQuestions = {};
 
     function loadQuestion() {
         const questionArea = document.getElementById("question-content");
@@ -70,6 +71,9 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
+        // Mark question as viewed
+        viewedQuestions[`${currentSubject}-${currentQuestionIndex}`] = true;
+
         updateQuestionPalette();
     }
 
@@ -87,6 +91,8 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             if (userAnswers[`${currentSubject}-${index}`]) {
                 btn.classList.add("answered"); // Mark answered questions
+            } else if (viewedQuestions[`${currentSubject}-${index}`]) {
+                btn.classList.add("viewed"); // Mark viewed questions
             }
             if (markedForReview[`${currentSubject}-${index}`]) {
                 btn.classList.add("marked-for-review"); // Mark questions for review

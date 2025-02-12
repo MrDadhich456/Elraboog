@@ -23,7 +23,6 @@ body {
 .logo {
     font-weight: bold;
     font-size: 20px;
-    text-decoration: none;
 }
 
 .timer {
@@ -141,6 +140,10 @@ body {
 
 .question-btn.answered {
     background: #ff1744;
+}
+
+.question-btn.viewed {
+    background: #ff9800; /* Orange color for viewed questions */
 }
 
 .question-btn.active-question {
