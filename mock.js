@@ -26,14 +26,14 @@ document.addEventListener("DOMContentLoaded", function () {
     // Questions Database
     const questions = {
         physics: [
-            { question: "What is the unit of force?", options: ["Newton", "Joule", "Watt", "Pascal"], answer: "Newton" },
-            { question: "Acceleration due to gravity on Earth is?", options: ["9.8 m/s²", "10 m/s²", "5 m/s²", "20 m/s²"], answer: "9.8 m/s²" }
+            { question: "What is the unit of force?", options: ["Newton", "Joule", "Watt", "Pascal"], answer: "Newton", image: "/assest/physics/AC/1.png" },
+            { question: "Acceleration due to gravity on Earth is?", options: ["9.8 m/s²", "10 m/s²", "5 m/s²", "20 m/s²"], answer: "9.8 m/s²", image: "path/to/image2.jpg" }
         ],
         chemistry: [
-            { question: "What is the chemical formula of water?", options: ["H2O", "CO2", "O2", "H2"], answer: "H2O" }
+            { question: "What is the chemical formula of water?", options: ["H2O", "CO2", "O2", "H2"], answer: "H2O", image: "path/to/image3.jpg" }
         ],
         math: [
-            { question: "What is the value of π (pi) up to two decimal places?", options: ["3.12", "3.14", "3.16", "3.18"], answer: "3.14" }
+            { question: "What is the value of π (pi) up to two decimal places?", options: ["3.12", "3.14", "3.16", "3.18"], answer: "3.14", image: "path/to/image4.jpg" }
         ]
     };
 
@@ -47,6 +47,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const questionArea = document.getElementById("question-content");
         const optionsContainer = document.getElementById("options-container");
         const questionText = document.getElementById("question-text");
+        const questionImageContainer = document.getElementById("question-image-container");
+        const questionImage = document.getElementById("question-image");
 
         if (!questions[currentSubject] || questions[currentSubject].length === 0) {
             questionArea.innerHTML = "No questions available.";
@@ -56,6 +58,13 @@ document.addEventListener("DOMContentLoaded", function () {
         const currentQuestion = questions[currentSubject][currentQuestionIndex];
         questionText.innerHTML = `Question ${currentQuestionIndex + 1}:`;
         questionArea.innerHTML = currentQuestion.question;
+
+        if (currentQuestion.image) {
+            questionImageContainer.style.display = "block";
+            questionImage.src = currentQuestion.image;
+        } else {
+            questionImageContainer.style.display = "none";
+        }
 
         optionsContainer.innerHTML = "";
         currentQuestion.options.forEach((option, index) => {
