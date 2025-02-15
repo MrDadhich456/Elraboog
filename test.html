@@ -15,17 +15,22 @@
     }
 
     header {
-      background-color: #161B22;
-      color: #58A6FF;
-      text-align: center;
-      padding: 20px;
-      border-bottom: 2px solid #30363D;
+      position: sticky; /* Makes it stick to the top */
+    top: 0; /* Sticks to the top of the viewport */
+    height: 80px;
+    background-color: #0D1117; /* Same background as the site for seamless blending */
+    z-index: 1000; /* Ensures it stays above other content */
+    padding: 10px 0; /* Add padding for top and bottom */
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); Optional: Adds a subtle shadow */
+    display: flex; /* Use flexbox to center the content */
+    justify-content:left; /* Centers the content horizontally */
+    align-items: center; /* Centers the content vertically */
+    transform: translateY(-25px);
+    border-bottom: 1px solid #28353D;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
-      font-weight: 600;
+    header img {
+      margin-left: 20px;
     }
 
     main {
@@ -109,7 +114,7 @@
 <body>
 
 <header>
-  <h1>Physics: Chapters Overview</h1>
+  <img src="/assest/img/logo/Black_And_White_Illustrated_Eagle_Logo__1___1_-removebg 1.png" alt="Logo">
 </header>
 
 <main>
