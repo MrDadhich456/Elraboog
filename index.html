@@ -36,7 +36,11 @@
     <!-- Main Content -->
     <main>
       <header>
-        <input type="text" class="search-bar" placeholder="Search"> 
+        <div style="position: relative; width: 100%; margin: auto; ">
+          <input type="text" class="search-bar" placeholder="Search" oninput="searchFunction()">
+          <div id="searchResults"></div>
+      </div>
+      
       </header>
       <section class="hero">
         <!-- Text Section -->
@@ -158,4 +162,42 @@
       e.preventDefault();
     }
   });
+  const searchData = [
+    { name: "JEE Physics Test", tags: ["jee", "physics", "test"], link: "physics-test.html" },
+    { name: "NEET Biology Quiz", tags: ["neet", "biology", "quiz"], link: "biology-quiz.html" },
+    { name: "Class 12 Chemistry", tags: ["class 12", "chemistry", "notes"], link: "chemistry-notes.html" },
+    { name: "Maths Integration Test", tags: ["maths", "integration", "test"], link: "integration-test.html" }
+];
+
+function searchFunction() {
+  let input = document.querySelector(".search-bar").value.toLowerCase();
+  let resultsContainer = document.getElementById("searchResults");
+  resultsContainer.innerHTML = ""; // Clear previous results
+
+  if (input === "") {
+      resultsContainer.style.display = "none"; // Hide when empty
+      return;
+  }
+
+  let filteredResults = searchData.filter(item =>
+      item.name.toLowerCase().includes(input) || 
+      item.tags.some(tag => tag.includes(input))
+  );
+
+  if (filteredResults.length === 0) {
+      resultsContainer.innerHTML = "<div class='search-result'>No results found</div>";
+  } else {
+      filteredResults.forEach(item => {
+          let resultItem = document.createElement("a");
+          resultItem.href = item.link;
+          resultItem.classList.add("search-result");
+          resultItem.innerText = item.name;
+          resultsContainer.appendChild(resultItem);
+      });
+  }
+
+  resultsContainer.style.display = "block"; // Show results when typing
+}
+
+
 </script>
